@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>string dealing</title>
+</head>
+<body>
+	<input type="text" id = "txt" >
+	<input type="button" value="check" onclick="check()">
+	<script>
+	//计算长度
+	//应用场景：防止用户输入的字符串长度超出数据库中的相应字段的最大长度，在页面中对输入字符串长度进行检查
+	var str1= "你好";
+	// console.log(str1.length);
+        function StrLength(str) {
+            var re = /[\u4e00-\u9fa5]/g;  //中文字符正则表达式为[\u4e00-\u9fa5]
+            return  str.replace(re, "aa").length;//将字符串中的中文字符替换为"aa",因为一个中文字符占两个字节，而str.length计算的是文本框中实际内容的长度，一个中文字符长度1
+        }
+        // console.log(StrLength(str1));
+        
+        function check() {
+            var str = document.getElementById("txt").value; //获取输入的字符串;
+            if(StrLength(str) > 10) {
+        	alert("输入字符串长度超过指定长度！");
+            }
+            document.getElementById("txt").value = "";
+        }
+	</script>
+</body>
+</html>
