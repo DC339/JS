@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>string dealing</title>
+</head>
+<body>
+	<script>
+		//截断字符串中的空白符，用空字符串代替
+		function trimEnd(str) {
+			var re = /\s+$/;
+			return str.replace(re, "");
+		}
+		function trimStart(str) {
+			var re = /^\s+/;
+			return str.replace(re, "");
+		}
+		function trim(str) {
+			var re = /^\s+|\s+$/;
+			return str.replace(re, "");
+		}
+		// console.log(trimStart("  abc  "));
+		//截断指定字符串
+		function strimEnd(str, c) {
+			var re;
+			if(!c) re = /\s+$/;
+			else re = new RegExp("(?:"+c+")+$");
+			return str.replace(re, "");
+		}
+		var str = "aibc hdj ai";
+		function strimStart(str, c) {
+			var re;
+			if(!c) re = /^\s+/;
+			else re = new RegExp("^(?:"+ c +")+");//能否写成perl风格？？？
+			// else re = /^(?:("+c+"))+/g;
+			return str.replace(re, "");
+		}
+		function strim(str, c) {
+			var re;
+			if(!c) re = /^\s+|\s+$/;
+			else re = new RegExp("^(?:"+ c +")+|(?:"+ c +")+$", "g");
+			return str.replace(re, "");
+		}
+		// console.log(strimStart(str, "ai"));
+	</script>
+</body>
+</html>

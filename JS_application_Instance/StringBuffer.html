@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>string dealing</title>
+</head>
+<body>
+	<script>
+		//连接
+		//case1:产生长度为10的随机字符串
+		var a2z = "abcdefghijklmnopqrstuvwxyz".split("");
+		var arr = [];
+		for(var i=0;i<10;i++) {
+			var index = Math.floor(Math.random()*26);
+			arr.push(a2z[index]);
+		}
+		// console.log(arr.join(""));
+
+		//case2:编写一个各版本浏览器字符串连接的StringBuffer类
+		function StringBuffer(){
+			//先判断浏览器类型
+			this.isIE = navigator.userAgent.indexOf("MSIE") > -1; //>-1，即this.isIE = true,则判断为IE浏览器
+			if(this.IE) {
+				var arr = [];
+				this.append = function () {
+					for(var i=0;i<arguments.length; i++) {
+					    this.arr.push(arguments[i]);//数组保存需要连接的字符串
+				    }
+				    return this.arr;
+				};
+				this.toString = function () {
+					return this.arr.join("");//使用join方法返回连接后的字符串
+				}
+			}
+			else {
+				this.str = "";
+				this.append = function () {
+					for(var i=0;i<arguments.length;i++){
+						this.str += arguments[i];
+					}
+					return this.str;
+				};
+				this.toString = function() {
+					return this.str;
+				}
+			}
+		}
+        //test
+        var dt1 = new Date();
+        var sb = new StringBuffer();
+        for(var i=0;i<10;i++) {
+        	sb.append("abc");
+        }
+        var str = sb.toString();
+        document.writeln(str);
+        var dt2 = new Date();
+        document.writeln(dt2-dt1);
+
+
+	</script>
+</body>
+</html>
