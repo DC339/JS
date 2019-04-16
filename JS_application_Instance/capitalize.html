@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Capitalize toUpperCase</title>
+</head>
+<body>
+	<script>
+		//将首字母替换为大写字母
+		//global的值决定是否替换全部单词的首字母 
+		function capitalize(str, global) {
+			var re;
+
+ 			if(!global) re = /\S+/; //仅匹配第一个单词
+ 			else re = /\S+/g;  //匹配所有单词
+
+ 			return str.replace(re, function(word) {
+ 				return word.replace(/\S/, function(a){
+ 					console.log(a);
+ 					return a.toUpperCase();
+ 				});
+ 			});
+		}
+		document.write(capitalize("we are family", true));
+
+		/*
+		//检测正则表达式/\S/和/\S+/、/\S+/g和/\S/g的不同之处
+		var str = "we are family";
+		console.log(str.replace(/\S/, 'l')); //匹配第一个非空字符，并将非空字符替换为l
+		console.log(str.replace(/\S+/, 'l')); //匹配第一个非空字符串，并将非空字符串替换为l
+		console.log(str.replace(/\S+/g, 'l')); //匹配所有非空字符串，并将每个字符串替换为l
+		console.log(str.replace(/\S/g, 'l')); //匹配所有非空字符，并将每个字符替换为l
+		*/
+
+		
+	</script>
+</body>
+</html>
