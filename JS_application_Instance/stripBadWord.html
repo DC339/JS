@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>stripBadWord</title>
+</head>
+<body>
+	<script>
+
+		//屏蔽非法用词
+		function stripBadWord(str) {
+			var re = /bad|anotherbadword/gi;
+			return str.replace(re, function(word) {
+				return word.replace(/\S/g, "*");
+			});
+		}
+	    document.write(stripBadWord("BADWORD1 BLAbadBLABLA SSSbad"));
+
+	    //删除HTML标签
+	    function stripHTMLTag(str) {
+	    	console.log(str);
+	    	// var re = /<\S*?[^>]*>.*?|<.*?>/g;
+	    	var re = /<[^>]+>/gim;
+	    	return str.replace(re, "");
+	    }
+	    console.log(stripHTMLTag("<b><i>hello</i></b>"));
+	</script>
+</body>
+</html>
