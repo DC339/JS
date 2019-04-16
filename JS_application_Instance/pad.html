@@ -6,24 +6,24 @@
 </head>
 <body>
 	<script>
-		//填充-----将字符串按指定的字符填充到一定长度
-		//c为填充字符，length为长度。getString(c,length)返回长度为length的字符串，所有字符均为c
-		function getString(c, length) {
-			var bArr = length.toString(2).split("");
-			// console.log(bArr);
-			//将length转化为2进制数，并转换为数组，例如length=20时，bArr=["1","0","1","0","0"]
-			var ret = "";
-			var step = c;
-			for (var i = bArr.length-1;i >= 0;i--) {//从末尾开始连接字符串
-				// console.log(i);
-				if(bArr[i] == "1") ret += step; //当前位为1时，在ret字符串后面增加step
-				step +=step; //步长加倍,2进制中挪一步相当于变化了2的一次方
-			}
-			return ret;
+	//填充-----将字符串按指定的字符填充到一定长度
+	//c为填充字符，length为长度。getString(c,length)返回长度为length的字符串，所有字符均为c
+	function getString(c, length) {
+		var bArr = length.toString(2).split("");
+		// console.log(bArr);
+		//将length转化为2进制数，并转换为数组，例如length=20时，bArr=["1","0","1","0","0"]
+		var ret = "";
+		var step = c;
+		for (var i = bArr.length-1;i >= 0;i--) {//从末尾开始连接字符串
+			// console.log(i);
+			if(bArr[i] == "1") ret += step; //当前位为1时，在ret字符串后面增加step
+			step +=step; //步长加倍,2进制中挪一步相当于变化了2的一次方
 		}
+		return ret;
+	}
         //str为原始字符串，len为填充后的字符串，c为填充字符，dir为填充方向，dir>0,从字符串左侧开始填充，dir<=0从右侧
         function pad(str, len, c, dir) {
-        	var out = String(str);
+        	var out = String(str); //将输入的str转化为字符串，方便后面的拼接(输入有可能不是字符串)
         	if(!c) c ="0";  //若c未定义则默认c=0
         	if(!dir) dir = 1;  //若dir未定义则默认dir=1,在左侧填充
 
