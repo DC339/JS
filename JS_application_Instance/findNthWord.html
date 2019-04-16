@@ -21,6 +21,7 @@
 			re.test(str);
 			return RegExp.$1;
 		}
+		
         //以单词边界匹配全局中以非空字符串开头非空字符串结尾的最短字符串（非贪婪模式）
         function findNthWord2(str, n) {
         	var re = /\b(\S+?)\b/g;
