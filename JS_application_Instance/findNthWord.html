@@ -11,8 +11,8 @@
 		//以字符串开始或结束的位置进行匹配（^、$）
 		//以开始的位置匹配，匹配任何以空格+单词开始的字符串，返回第二个子模式匹配的内容
         function findNthWord(str, n) {
-            var re = new RegExp("\\s*(\\w+){" + n +"}");
-            re.test();
+            var re = new RegExp("^(\\s*(\\w+)){" + n +"}");
+            re.test(str);
             return RegExp.$2;
         }
         //匹配以空格加字符串结尾的字符串，返回第一个子模式匹配的内容
