@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		ul, li {
+			padding: 0;
+			margin: 0;
+		}
+		li {
+			list-style: none;
+		}
+		input {
+			padding: 0;
+		}
+		s {
+			text-decoration: none;
+		}
+		p {
+			padding: 0;
+			margin: 0;
+			word-break: break-all;
+		}
+		.clearfix:after{
+			content: ".";
+			display: block;
+			height: 0;
+			visibility: hidden;
+			clear: both;
+		}
+
+		.box {
+			position: relative;
+			width: 236px;
+			height: 476px;
+			background: url(img/phone.jpg) no-repeat;
+			margin: 0 auto;
+		}
+		.content {
+			position: absolute;
+			top: 71px;
+			left: 25px;
+			width: 188px;
+			height: 333px;
+			background-color: #eee;
+		}
+		.box #cont {
+            height: 295px;
+            border-bottom: 1px solid #ccc;
+		}
+
+		.box form {
+			height: 38px;
+			padding-top: 5px;
+			background-color: #fff;
+		}
+
+		.box #people {
+			/*display: inline-block;*/
+			width: 24px;
+			height: 24px;
+			border: 1px solid #ccc;
+			border-radius: 3px;
+			margin-left: 3px;
+			float: left;
+			cursor:pointer;
+		}
+
+		.box #text {
+			width: 111px;
+			height: 24px;
+			float: left;
+			margin-left: 3px;
+			border-radius: 3px;
+			border: 1px solid #ccc;
+		}
+
+		.box #btn {
+			float: left;
+			margin-left: 3px;
+			width: 32px;
+			height: 24px;
+			border: none;
+			color: #979596;
+			background-color: #fff;
+			font-size: 16px;
+		}
+		.fl img{
+            float: left;
+		}
+		.fl p, .fr p {
+			line-height: 24px;
+			max-width: 140px;
+			border: 1px solid #ccc;
+			border-radius: 3px;
+		}
+		.fl p {
+			/*background-color: rgba(133,133,133,.4);*/
+			background-color: #fff;
+			margin-left: 5px;
+			float: left;
+
+		}
+		.fr img{
+			float: right;
+		}
+		.fr p {
+			float: right;
+			margin-right: 5px;
+			background-color: rgba(66, 200,18,.5);
+			border: 1px solid #ccc;
+		}
+		.fl, .fr {
+			margin-top: 5px;
+			margin-bottom: 5px;
+		}
+
+	</style>
+</head>
+<body>
+	<div class="box">
+		<div class="content">
+			<ul id="cont">
+				<!-- <li class="fl clearfix">
+					<img src="img/1.png">
+					<p>" + text.value + "</p>
+
+				</li>
+				<li class="fr clearfix">
+					<img src="img/2.png">
+					<p>" + text.value + "</p>
+				</li> -->
+			</ul>
+			<form>
+				<s id="people">
+					<img src="img/1.png" id="pic">
+				</s>
+				<input type="text" id="text" />
+				<input type="button" id="btn" value="发送" />
+			</form>
+		</div>
+	</div>
+	<script>
+		window.onload = function () {
+			var arrImg = ["img/1.png", "img/2.png"];
+			var cont = document.getElementById('cont');
+			var text = document.getElementById('text');
+			var btn = document.getElementById('btn');
+			var img = document.getElementById('pic');
+			var n = 0, onoff=true;
+
+			img.onclick = function () {
+				if (onoff) {
+					img.src = arrImg[1];
+				}else img.src = arrImg[0];
+				onoff = !onoff;
+				text.value="";
+			}
+
+			btn.onclick = function () {
+				if(onoff) {
+				    cont.innerHTML = '<li class="fl clearfix"><img src="img/1.png"><p>' + text.value + '</p></li>' + cont.innerHTML;
+				}else {
+					cont.innerHTML = '<li class="fr clearfix"><img src="img/2.png" /><p>' + text.value + '</p></li>' + cont.innerHTML;
+				}
+				text.value = "";
+			}
+
+
+		}
+	</script>
+</body>
+</html>
