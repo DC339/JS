@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		.btn {
+			width: 400px;
+			height: 60px;
+			text-align: center;
+			}
+		.content {
+			position: relative;
+			width: 400px;
+			height: 400px;
+			background-color: #ccc;
+		}
+		#content a {
+			position: absolute;
+			top: 180px;
+			width: 40px;
+			height: 40px;
+			line-height: 40px;
+			color: black;
+			background-color: #fff;
+			filter: alpha(opacity: 40);
+			opacity: .4;
+			font-size:30px;
+			font-weight: bold;
+			text-decoration: none;
+			text-align:center;
+		}
+		#content a:hover {
+			filter:alpha(opacity:90);
+			opacity: .9;
+		}
+		#prev {
+			left: 0;
+		}
+		#next {
+			right: 0;
+		}
+		#text, #sp {
+			position: absolute;
+			left: 0;
+			width: 400px;
+			height: 30px;
+			line-height: 30px;
+			background-color: #000;
+			filter: alpha(opacity: 60);
+			opacity: .6;
+			color: #fff;
+			text-align: center;
+		}
+		#text:hover, #sp:hover {
+			opacity: .9;
+		}
+		#text {
+			bottom: 0;
+			margin: 0;
+		}
+		#sp {
+			top:0;
+		}
+		#img1 {
+			width:400px;
+			height: 400px;
+		}
+	</style>
+	<script>
+		window.onload = function () {
+			var oPrev = document.getElementById('prev');
+			var oNext = document.getElementById('next');
+			var oText = document.getElementById('text');
+			var oSpan = document.getElementById('sp');
+			var oImg = document.getElementById('img1');
+			var order = document.getElementById('order');
+			var loop = document.getElementById('loop');
+			var des = document.getElementById('des');
+
+			var arrUrl = ['img/1.jpg', 'img/2.jpg','img/3.jpg','img/4.jpg'];
+			var arrText = ['1', '2', '3', '4'];
+			var num = 0;
+			var onoff = true;  //用来控制循环还是顺序，默认为
+
+
+			//初始化
+			function fnTab () {
+				oSpan.innerHTML = num + 1 + ' / ' + arrUrl.length;
+				oText.innerHTML = arrText[num];
+				oImg.src = arrUrl[num];
+			}
+			fnTab();
+
+            loop.onclick = function () {
+                onoff = true;
+                des.innerHTML = "图片循环播放";
+            }
+            order.onclick = function () {
+            	onoff = false;
+            	des.innerHTML = "图片顺序播放";
+            }
+
+
+			oPrev.onclick = function () {
+				num--;
+				if (num < 0) {
+					if (onoff) {
+						num = arrText.length - 1;
+					}else {
+						num = 0;
+						alert("已经是最后一张了"); 
+					}
+					 
+				};
+				fnTab();
+			};
+			oNext.onclick = function () {
+				num++;
+				if (num >= 4) {
+					if(onoff){
+                       num = 0;
+					}else {
+						num = 3
+						alert("已经是最后一张了");
+					}
+				};
+				fnTab();
+			};
+		};
+		
+
+	</script>
+</head>
+<body>
+	<div class="btn">
+		<form>
+			<input id="order" type="button" value="顺序播放">
+			<input id="loop" type="button" value="循环播放">
+		</form>
+		<p id="des">图片顺序播放</p>
+	</div>
+	<div class="content" id="content">
+		<a id="prev" href="javascript:;"> < </a>
+		<a id="next" href="javascript:;"> > </a>
+		<span id="sp">正在计算...</span>
+		<p id="text">图片文字正在加载...</p>
+		<img id="img1" alt="">
+	</div>
+</body>
+</html>
