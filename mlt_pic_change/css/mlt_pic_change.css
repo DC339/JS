@@ -1,0 +1,93 @@
+body {
+	background-color: #333;
+}
+body,p {
+	margin: 0;
+	padding: 0;
+}
+img {
+	vertical-align: top;
+	border: none;
+}
+input {
+	padding: 0;
+	border: none;
+}
+
+.clearfix {
+	content:".";
+	height: 0;
+	display: block;
+	visibility: hidden;
+	clear: both;
+}
+
+.content {
+	position: relative;
+	width: 800px;
+	height: 500px;
+	padding: 40px 0 0 30px;
+	border: 1px solid #000;
+	background: url(../img/bg.jpg);
+	background-size: 100% 100%;
+	box-sizing: border-box;
+	margin: 50px auto;
+}
+
+.content .btn {
+	margin-bottom: 10px;
+}
+
+.content .btn input {
+	width:80px;
+	height: 20px;
+	border: 1px solid #666;
+	border-radius: 5px;
+	background-color: rgba(220,200,230,0,5);
+}
+
+.content .picture {
+}
+
+.content p {
+	text-align: center;
+	color: #333;
+	letter-spacing: 3px;
+	font: bold 14px/30px "宋体";
+}
+
+.content .left, .content .right {
+	position: relative;
+	float: left;
+	padding: 20px;
+	background: #fff;
+}
+
+.content .left {
+	margin-right: 40px;
+}
+
+.content .left img {
+	width: 400px;
+	height:300px;
+}
+
+.content .right img {
+	width: 220px;
+	height: 300px;
+}
+
+.content .left #f-search1,#f-search2,#s-search1,#s-search2 {
+	position: absolute;
+	width: 50%;
+	height: 300px;
+	top: 20px;
+}
+
+.content .left #f-search1, .content .right #s-search1 {
+	left: 20px;
+}
+
+.content .left #f-search2, .content .right #s-search2 {
+	right: 20px;
+}

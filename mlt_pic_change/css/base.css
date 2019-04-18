@@ -1,0 +1,23 @@
+body {
+	background-color: #333;
+}
+body,p {
+	margin: 0;
+	padding: 0;
+}
+img {
+	vertical-align: top;
+	border: none;
+}
+input {
+	padding: 0;
+	border: none;
+}
+
+.clearfix {
+	content:".";
+	height: 0;
+	display: block;
+	visibility: hidden;
+	clear: both;
+}

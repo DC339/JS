@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>multi-pic-change</title>
+	<link rel="stylesheet" href="css/mlt_pic_change.css">
+	<!-- <script src="js/mlt_pic_change.js"></script> -->
+</head>
+<body>
+	<div class="content" id="content">
+		<div class="btn">
+			<form>
+				<input type="button" id="last" value="上一组" />
+				<input type="button" id="next" value="下一组" />
+			</form>
+		</div>
+		<div class="picture">
+		<div class="left">
+			<img id="img1" src="img/img1/belle.jpg" />
+			<p id="text1">第一组第一张</p>
+			<span id="num1">1 / 5</span>
+			<div id="f-search1"></div>
+			<div id="f-search2"></div>
+		</div>
+		<div class="right">
+			<img id="img2" src="img/img2/load.jpg" />
+			<p id="text2">第二组第一张</p>
+			<span id="num2">1 / 4</span>
+			<div id="s-search1"></div>
+			<div id="s-search2"></div>
+		</div>
+		</div>
+	</div>
+	<script>
+		//编写一个名字短一点的函数来替代document.getElementById的功能
+		function byId(id){
+	        return typeof(id) == 'string'?document.getElementById(id):id;
+        }
+        //获取DOM元素
+        //这里需要注意，出于安全考虑，不能通过外部引用来访问src
+        var pic1 = ["img/img1/belle.jpg","img/img1/city.jpg","img/img1/flower.jpg","img/img1/rouse.jpg","img/img1/smail.jpg"];
+        var pic2 = ["img/img2/load.jpg","img/img2/pencil.jpg","img/img2/watch.jpg","img/img2/water.jpg"];
+        var tx1 = ['一', '二', '三', '四', '五'];
+        var tx2 = ['一', '二', '三', '四'];
+        var last = byId('last'),
+            next = byId('next'),
+            imgL = byId('img1'),
+            imgR = byId('img2'),
+            limgL = byId('f-search1'),
+            limgR = byId('f-search2'),
+            rimgL = byId('s-search1'),
+            rimgR = byId('s-search2'),
+            txtL = byId('text1'),
+            txtR = byId('text2'),
+            spL = byId('num1'),
+            spR = byId('num2');
+        var n = 0, m = 0;
+        tabL();
+        tabR();
+        
+        limgL.onclick = function () {
+        	n--;
+        	if(n < 0) {
+        		n = pic1.length - 1;
+        	}
+        	tabL();
+        }
+
+        limgR.onclick = function () {
+        	n++;
+        	if (n >= 5) {
+        		n = 0;
+        	}
+        	tabL();
+        }
+
+        rimgL.onclick = function () {
+        	m--;
+        	if(m < 0) {
+        		 m = pic2.length - 1;
+        	}
+        	tabR();
+        }
+        rimgR.onclick = function () {
+        	m++;
+        	if(m >= 4) {
+        		m = 0;
+        	}
+        	tabR();
+        }
+        //上一组下一组
+        last.onclick = function () {
+        	n--;
+        	m--;
+        	if(n < 0) {
+        		n = pic1.length - 1;
+        	}
+        	tabL();
+        	if(m < 0) {
+        		m = pic2.length - 1;
+        	}
+        	tabR();
+        }
+
+        next.onclick = function () {
+        	m++;
+        	n++;
+        	if (n >= 5) {
+        		n = 0;
+        	}
+        	tabL();
+        	if (m >= 4) {
+        		m = 0;
+        	}
+        	tabR();
+        }
+
+
+        //初始化
+        function tabL () {
+	        imgL.src = pic1[n];
+	        txtL.innerHTML = '第一组' + '第' + tx1[n] +'张';
+	        spL.innerHTML = n + 1 + ' / ' + pic1.length;
+        }
+
+        function tabR () {
+	        imgR.src = pic2[m];
+	        txtR.innerHTML = '第二组' + '第' + tx2[m] +'张';
+	        spR.innerHTML = m + 1 + ' / ' + pic2.length;
+        }
+	</script>
+</body>
+</html>
