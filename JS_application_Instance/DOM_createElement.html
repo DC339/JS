@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>DOM</title>
+    <style type="text/css">
+        #dv {
+            width: 600px;
+            height: 100px;
+            border: 1px dotted #ccc;
+            text-align: justify;
+            }
+    </style>
+</head>
+<body>
+	<div id="dv"></div>
+	<form id="box">
+	<input type="button" id="btn" value="click" onclick="add()" />
+	</form>
+	<script>
+		function $(id) {
+			return typeof(id) == 'string' ? document.getElementById(id):id;
+		}
+
+
+		//获取容器
+        function add () {
+            // var box = $('box');
+            var dv = $('dv');
+
+            //创建文档片段
+            var frag = document.createDocumentFragment();
+            for (var i = 0;i < 10;i++) {
+                //1.createElement
+                var input = document.createElement('input');
+                input.type = "button";
+                input.value = "点击";
+                //把按钮添加到div中
+                box.appendChild(input);
+
+                //2.createTextNode
+                //创建文本节点
+                var text = document.createTextNode("some text");
+
+                //在text中追加一些文本
+                text.appendData(",new text added");
+
+                //将文本节点附加到div中
+                frag.appendChild(text);
+            }
+            //将文档片段加入div容器中
+            dv.appendChild(frag);
+        }
+
+	</script>
+</body>
+</html>

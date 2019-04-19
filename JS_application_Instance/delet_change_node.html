@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>删除和修改节点</title>
+    <style>
+        p {
+            border-bottom: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <input type="button" value="click" onclick="change()" />
+    <div id="div">
+        <div id="div1">
+            <h1>Sample pages1</h1>
+            <p>some text</p>
+        </div>
+        <div id="div2">
+            <h1>Sample pages2</h1>
+            <p>some text</p>
+        </div>
+        <div id="div3">
+            <h1>Sample pages3</h1>
+            <p>some text</p>
+        </div>
+        <div id="div4">
+            <h1>Sample pages4</h1>
+            <p>some text</p>
+        </div>
+        <div id="div5">
+            <h1>Sample pages5</h1>
+            <p>some text</p>
+        </div>
+    </div>
+    <script>
+        function change() {
+            var div = $('div'),
+                div1 = $('div1'),
+                div2 = $('div2'),
+                div3 = $('div3'),
+                div4 = $('div4'),
+                div5 = $('div5');
+        }
+
+        function change() {
+            //inserBefore
+            div.insertBefore(div2, div1);
+            //appendChild
+            div6 = div4.cloneNode(true);
+            div6.id = "div6";
+            div.appendChild(div6);
+            //removeChild
+            div.removeChild(div5);
+            //replaceChild方法
+            var newTextNode = document.createTextNode("this div has been replaced!");
+            div.replaceChild(newTextNode, div3);
+
+            //innerHTML
+            div2.innerHTML = "<h1>Sample pages2(changed)</h1><span>something changed</span>";
+        }
+        function $(id) {
+            return typeof(id) == 'string' ? document.getElementById(id) : id;
+        }
+    </script>
+</body>
+</html>
