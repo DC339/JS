@@ -94,6 +94,7 @@
 			max-width: 140px;
 			border: 1px solid #ccc;
 			border-radius: 3px;
+			padding: 0 3px; 
 		}
 		.fl p {
 			/*background-color: rgba(133,133,133,.4);*/
@@ -160,9 +161,9 @@
 
 			btn.onclick = function () {
 				if(onoff) {
-				    cont.innerHTML = '<li class="fl clearfix"><img src="img/1.png"><p>' + text.value + '</p></li>' + cont.innerHTML;
+				    cont.innerHTML += '<li class="fl clearfix"><img src="img/1.png"><p>' + text.value + '</p></li>';
 				}else {
-					cont.innerHTML = '<li class="fr clearfix"><img src="img/2.png" /><p>' + text.value + '</p></li>' + cont.innerHTML;
+					cont.innerHTML += '<li class="fr clearfix"><img src="img/2.png" /><p>' + text.value + '</p></li>';;
 				}
 				text.value = "";
 			}
