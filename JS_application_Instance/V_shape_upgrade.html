@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>点击按钮变动V的位置</title>
+	<style>
+		.box {
+			width: 500px;
+			height: 500px;
+			border: 1px solid #000;
+			position: relative;
+		}
+		.box div {
+			position: absolute;
+			width: 100px;
+			height:100px;
+			background-color: pink;
+			font-size: 30px;
+			text-align: center;
+			line-height: 100px;
+		}
+	</style>
+</head>
+<body>
+	<input type="button" id="btn" value="click" />
+	<div class="box" id="box">
+		<!-- <div class="box1" id="box0">0</div>
+		<div class="box1" id="box1">1</div>
+		<div class="box1" id="box2">2</div>
+		<div class="box1" id="box3">3</div>
+			<div class="box1" id="box4">4</div> -->
+	</div>
+	<script>
+		/*
+		向上：
+		i    left    top
+		0    0       0
+		1    100     100
+		2    200     200
+		3    300     100
+		4    400     0
+		left = i * 100
+		if i <= 2
+		    top = i * 100
+		else
+		    top = 400 - i * 100
+
+		向右
+		i    left    top
+		0    400     0
+		1    300     100
+		2    200     200
+		3    300     300
+		4    400     400
+		top = i * 100
+		if i <= 2
+		    left = 400 - i * 100
+		else 
+		    left = i * 100
+
+		向下
+		i    left    top
+		0    0       400
+		1    100     300
+		2    200     200
+		3    300     300
+		4    400     400
+		left = i * 100
+		if i <= 2
+		    top = 400 - i * 100
+		else 
+		    top = i * 100
+
+		向左
+		i    left    top
+		0    0       0
+		1    100     100
+		2    200     200
+		3    100     300
+		4    0       400
+		top = i * 100
+		if i <= 2
+		    left = i * 100
+		else 
+		    left = 400 - i * 100
+
+		*/
+		var btn = document.getElementById('btn');
+		var cont = document.getElementById('box');
+		var str = "";
+		var num = 0, leftVal = 0, topVal = 0;
+		btn.onclick = function () {
+			str = "";
+			for (var i = 0;i < 5;i++) {
+				if(num == 0) {
+					leftVal = i * 100;
+					if(i <= 2) {
+						topVal = i * 100;
+					}else topVal = 400 - i * 100;
+					str += '<div style="left:' + leftVal + 'px;top:' + topVal + 'px">' + i +'</div>';
+				}
+				if(num == 1) {
+					topVal = i * 100;
+					if(i <= 2) leftVal = 400 - i * 100;
+					else leftVal = i * 100;
+					str += '<div style="left:' + leftVal + 'px;top:' + topVal + 'px">' + i +'</div>';
+				}
+				if(num == 2) {
+					leftVal = i * 100;
+					if(i <= 2) {
+						topVal = 400 - i * 100;
+					}else topVal = i * 100;
+					str += '<div style="left:' + leftVal + 'px;top:' + topVal + 'px">' + i +'</div>';
+				}
+				if(num == 3) {
+					topVal = i * 100;
+					if(i <= 2) {
+						leftVal = i * 100;
+					}else leftVal = 400 - i * 100;
+					str += '<div style="left:' + leftVal + 'px;top:' + topVal + 'px">' + i +'</div>';
+				}
+			}
+			num++;
+			console.log(num);
+			console.log(str);
+			num%=4;
+			cont.innerHTML = str;
+		}
+	</script>
+</body>
+</html>
