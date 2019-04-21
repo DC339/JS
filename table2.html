@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<table border="" id="table">
+		<caption>table title and/or explanatory text</caption>
+		<thead>
+			<tr>
+				<th>header1</th>
+				<th>header2</th>
+				<th>header3</th>
+				<th>header4</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>data1</td>
+				<td>data2</td>
+				<td>data3</td>
+				<td>data4</td>
+			</tr>
+			<tr>
+				<td>data11</td>
+				<td>data22</td>
+				<td>data33</td>
+				<td>data44</td>
+			</tr>
+		</tbody>
+		<tfoot>
+			<tr>
+				<td>foot1</td>
+				<td>foot2</td>
+				<td>foot3</td>
+				<td>foot4</td>
+			</tr>
+		</tfoot>
+	</table>
+	<script type="text/javascript">
+		var table = document.getElementById('table');
+		table.tHead.style.borderColor = 'red';
+		table.tBodies[0].style.background = 'pink';
+		table.tBodies[0].rows[0].cells[2].style.color = 'red';
+		table.tFoot.style.backgroundColor = '#ccc';
+	</script>
+</body>
+</html>
