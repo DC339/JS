@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		#div1{
+			position: relative;
+			width: 100px;
+			height: 100px;
+			background-color: blue;
+			margin-left: 50px;
+		}
+		#div2 {
+			position: relative;
+			width: 60px;
+			height: 60px;
+			/*border: 5px solid  #DA09F5FF;*/
+			background-color: red;
+			top: 20px;
+			left: 30px;
+		}
+		#div3 {
+			position: absolute;
+			left: 20px;
+			top:20px;
+			width: 30px;
+			height: 30px;
+			background-color: yellow;
+			transition: 1s;
+			/*border: 10px solid  green;*/
+		}
+	</style>
+</head>
+<body>
+	<input type="button" id="btn" value="点击就走">
+	<div id="div1">
+		<div id="div2">
+			<div id="div3"></div>
+		</div>
+	</div>
+	<script>
+		var btn = document.getElementById('btn');
+		var div3 = document.getElementById('div3');
+		btn.onclick = function () {
+			var left = 0;
+			var elem = div3;
+			while(elem) {
+				left += elem.offsetLeft;
+				// alert(elem);
+				elem = elem.offsetParent;
+				// alert(left);
+			}
+			console.log(div3.offsetParent);
+			div3.style.left = -left + div3.offsetLeft + 'px';
+		}
+		
+	</script>
+</body>
+</html>

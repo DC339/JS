@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		span {
+			display: inline-block;
+			width: 80px;
+		}
+	</style>
+</head>
+<body>
+	<ul id="ul">
+		<li><span>first</span> 1 <input type="button" class="up" value="上移"> <input type="button" class="down" value="下移"></li>
+		<li><span>sencond</span> 2 <input type="button" class="up" value="上移"> <input type="button" class="down" value="下移"></li>
+		<li><span>third</span> 3 <input type="button" class="up" value="上移"> <input type="button" class="down" value="下移"></li>
+		<li><span>fourth</span> 4 <input type="button" class="up" value="上移"> <input type="button" class="down" value="下移"></li>
+		<li><span>fifth</span> 5 <input type="button" class="up" value="上移"> <input type="button" class="down" value="下移"></li>
+	</ul>
+	<script type="text/javascript">
+		var ul = document.getElementById('ul');
+		var lis = document.getElementsByTagName('li');
+		var ups = document.getElementsByClassName('up');
+		var downs = document.getElementsByClassName('down');
+		var arr = [0, 1, 2, 3, 4]
+		// var i in arr
+		// var i=0;i<ups.length;i++
+		for(var i in arr) {
+			ups[i].onclick = function () {
+				var obj = this.parentNode;
+				// console.log(obj);
+				if(ul.children[0] == obj) {
+					// alert(ul.children[0] == obj);
+					var cloneLi = obj.cloneNode(true);
+					ul.appendChild(cloneLi);
+					ul.removeChild(ul.children[0]);
+				}else {
+					var obj1 = obj.previousElementSibling;
+					ul.insertBefore(obj, obj1);
+				}
+			}
+			downs[i].onclick = function () {
+				var obj2 = this.parentNode;
+				if(ul.children[4] == obj2) {
+					var cloneLi1 = obj2.cloneNode(true);
+					ul.insertBefore(cloneLi1, ul.children[0]);
+					ul.removeChild(ul.children[5]);
+				}else {
+					var obj3 = obj2.nextElementSibling.nextElementSibling;
+					ul.insertBefore(obj2, obj3);
+				}
+			}
+		}
+			
+		
+	</script>
+		
+</body>
+</html>

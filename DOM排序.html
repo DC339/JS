@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		.cont {
+			width: 100px;
+			height: 500px;
+			margin: 0 auto;
+		}
+		.cont div {
+			width: 100px;
+			height: 100px;
+			line-height: 100px;
+			/*color: #fff;*/
+			text-align: center;
+		}
+		input {
+			width: 100px;
+		}
+		#dv1 {
+			background-color: yellow;
+		}
+		#dv2 {
+			background-color: red;
+		}
+		#dv3 {
+			background-color: blue;
+		}
+		#dv4 {
+			background-color: pink;
+		}
+		#dv5{
+			background-color: #ccc;
+		}
+		.wrap {
+			margin: 10px auto;
+			width: 100px;
+		}
+	</style>
+</head>
+<body>
+	<div>
+	<div class="cont" id="cont">
+		<div class="dv" id="dv1">5</div>
+		<div class="dv" id="dv2">2</div>
+		<div class="dv" id="dv3">4</div>
+		<div class="dv" id="dv4">3</div>
+		<div class="dv" id="dv5">1</div>
+	</div>
+	</div>
+	<div class="wrap"><input type="button" id="btn"></div>
+	<script type="text/javascript">
+		/*
+		 1.获取按钮元素和div的innerHTML
+		 
+		 2.点击按钮进行排序
+		 根据每个元素的innerHTML大小对元素进行位置调节
+
+		 3.如果dvs[i].innerHTML> dvs[i+1].innerHTML，则将dvs[i+1]插入到dvs[i]之前
+		*/
+		
+		var cont = document.getElementById('cont')
+		var btn = document.getElementById('btn');
+		btn.value = '升序';
+		var dvs = document.getElementsByClassName('dv');
+		var arr = [];
+		
+		btn.onclick = function () {
+			// console.log(btn.value);
+			if(btn.value == '升序'){
+
+				// 把dv5放到最下面
+				var clonedv5 = dvs[0].cloneNode(true);
+				cont.appendChild(clonedv5);
+				cont.removeChild(cont.firstElementChild);
+				//把dv2放在第一个子节点的前面
+				cont.insertBefore(dvs[3], dvs[0]);
+				cont.insertBefore(dvs[3], dvs[2]);
+				btn.value = '降序';
+
+			}
+			else if(btn.value == '降序') {
+				// alert(1);
+				var clonedv6 = dvs[4].cloneNode(true);
+				cont.insertBefore(clonedv6, dvs[0]);
+				cont.removeChild(dvs[5]);
+				cont.insertBefore(dvs[4], dvs[1]);
+				cont.insertBefore(dvs[4], dvs[2]);
+				cont.insertBefore(dvs[4], dvs[3]);
+				btn.value = '还原';
+
+			}
+			else{
+				alert("finished");
+			}
+
+
+		}
+	</script>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		p {
+			margin: 0;
+			padding:5px 0;
+		}
+		div,input,textarea{
+			box-sizing: border-box;
+		}
+		.cont {
+			width:800px;
+			height: 600px;
+			margin: 0 auto;
+		}
+		.box {
+			padding:0px 20px;
+			height: 100px;
+			border: 1px solid #7F7F7FFF;
+		}
+		#text {
+			margin-top: 10px;	
+			width: 800px;
+			height: 200px;
+		}
+		input {
+			width: 800px;
+			outline: none;
+		}
+	</style>
+</head>
+<body>
+	<div class="cont">
+		<h2 id="lyb">留言板</h2>
+		<hr>
+		<div class="box" id="box"></div>
+		<textarea id="text"></textarea>
+		<input type="submit" id="subm" value="点击提交">
+	</div>
+</body>
+<script type="text/javascript">
+	var btn = document.getElementById('subm');
+	var txt = document.getElementById('text');
+	var box = document.getElementById('box');
+	// var ols = document.createElement('ol');
+	var h = 20,n = 0;
+
+	btn.onclick = function () {
+		n ++;
+		if(text == "") {
+			alert("请输入内容");
+		}else {
+			var sp = document.createElement('p');
+			sp.innerHTML = n + '. ' + txt.value;
+			// console.log(sp.innerHTML);
+			box.appendChild(sp);
+			// console.log(box.innerHTML);
+			h += sp.offsetHeight; 
+			console.log(sp.offsetHeight);
+			console.log(h);
+			if(h > 100) {
+				box.style.height = h + 'px';
+			}
+			sp.onmouseover = function () {
+				sp.style.backgroundColor = 'yellow';
+			}
+			sp.onmouseout = function () {
+				sp.style.backgroundColor = '';
+			}
+			
+
+
+		}
+
+	}
+</script>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		#div1{
+			position: relative;
+			width: 100px;
+			height: 100px;
+			background-color: blue;
+			margin-left: 50px;
+			border: 30px solid #000;
+		}
+		#div2 {
+			position: relative;
+			width: 60px;
+			height: 60px;
+			border: 10px solid  #000;
+			background-color: red;
+			top: 20px;
+			left: 30px;
+		}
+		#div3 {
+			position: absolute;
+			left: 20px;
+			top:20px;
+			width: 30px;
+			height: 30px;
+			background-color: yellow;
+			transition: 1s;
+			border: 10px solid  green;
+		}
+	</style>
+</head>
+<body>
+	<input type="button" id="btn" value="点击就走">
+	<div id="div1">
+		<div id="div2">
+			<div id="div3"></div>
+		</div>
+	</div>
+	<script>
+		/*
+			div3距离最左边的距离 = 三个左边框之和 + 三个div的offsetLeft - div3的左边框
+		 */
+		// var btn = document.getElementById('btn');
+		// var div3 = document.getElementById('div3');
+		// btn.onclick = function () {
+		// 	var left = 0;
+		// 	var elem = div3;
+		// 	while(elem) {
+		// 		left += elem.offsetLeft + parseInt(getComputedStyle(elem).borderLeftWidth);
+		// 		// alert(elem);
+		// 		elem = elem.offsetParent;
+		// 		// alert(left);
+		// 	}
+		// 	console.log(div3.offsetParent);
+		// 	div3.style.left = -left + parseInt(getComputedStyle(div3).borderLeftWidth) + div3.offsetLeft + 'px';
+		// }
+
+		/*
+			getBoundingClientRect(返回值为一个对象)：
+			获取某个元素的信息（高版本：left top bottom right width height）
+
+			需要注意的是： 获取的值是会根据滚动条变化的
+		 */
+		
+		var div3 = document.getElementById('div3');
+		var btn = document.getElementById('btn');
+
+		btn.onclick = function () {
+			div3.style.left = -div3.getBoundingClientRect().left + div3.offsetLeft + 'px';
+			console.log(div3.getBoundingClientRect().top);
+		}
+		
+	</script>
+</body>
+</html>
