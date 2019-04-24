@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		p {
+			margin: 0;
+			padding:5px 0;
+		}
+		div,input,textarea{
+			box-sizing: border-box;
+		}
+		.cont {
+			width:800px;
+			height: 600px;
+			margin: 0 auto;
+		}
+		.box {
+			padding:0px 20px;
+			height: 100px;
+			border: 1px solid #7F7F7FFF;
+		}
+		#text {
+			margin-top: 10px;	
+			width: 800px;
+			height: 200px;
+		}
+		input {
+			width: 800px;
+			outline: none;
+		}
+		p {
+			padding: 0;
+			margin: 0;
+			position: relative;
+			line-height:30px;
+		}
+		a {
+			display:block;
+			width: 40px;
+			height: 30px;
+			/*line-height: 20px;*/
+			position: absolute;
+			top: 0;
+		}
+	</style>
+</head>
+<body>
+	<div class="cont">
+		<h2 id="lyb">留言板</h2>
+		<hr>
+		<div class="box" id="box"></div>
+		<textarea id="text"></textarea>
+		<input type="submit" id="subm" value="点击提交">
+	</div>
+</body>
+<script type="text/javascript">
+	var btn = document.getElementById('subm');
+	var txt = document.getElementById('text');
+	var box = document.getElementById('box');
+	// var ols = document.createElement('ol');
+	var h = 20,n = 0;
+
+	btn.onclick = function () {
+		if(txt.value == "") {
+			alert("请输入内容");
+		}else {
+			n++;
+			var sp = document.createElement('p');
+			sp.innerHTML = n + '. ' + txt.value;
+			// console.log(sp.innerHTML);
+			box.appendChild(sp);
+			// console.log(box.innerHTML);
+			h += sp.offsetHeight; 
+			// console.log(sp.offsetHeight);
+			// console.log(h);
+			if(h > 100) {
+				box.style.height = h + 'px';
+			}
+
+			var sp = document.getElementsByTagName('p');
+
+			for(var i=0;i<sp.length;i++){
+				sp[i].onmouseover = function () {
+					this.style.backgroundColor = 'yellow';
+					if(this.children.length == 0) {
+						var a = document.createElement('a');
+						a.innerHTML = '<a>删除</a>';
+						a.style.right = '10px';
+						this.appendChild(a);
+
+
+						var as = document.getElementsByTagName('a');
+						as[0].onclick = function () {
+							box.removeChild(as[0].parentNode);
+						}
+					}
+				}
+
+				sp[i].onmouseleave = function () {
+					this.style.backgroundColor = '';
+					this.removeChild(this.children[0]);
+				}
+			}
+			
+		}
+
+	}
+</script>
+</html>
