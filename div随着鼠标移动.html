@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		#div1 {
+			position: absolute;
+			width: 100px;
+			height: 100px;
+			background-color: red;
+		}
+	</style>
+</head>
+<body style="height: 2000px;">
+	<div id="div1"></div>
+	<script type="text/javascript">
+		window.onload = function () {
+			//在document上移动鼠标触发
+			document.onmousemove = function (ev) {
+				var div1 = document.getElementById('div1');
+
+				var ev = ev || event;
+				var scrollTop = document.documentElement.scrollTop ||document.body.scrollTop;
+				var scrollLeft = document.documentElement.scrollLeft ||document.body.scrollLeft;
+				// console.log(scrollTop);
+				div1.style.left = ev.clientX + scrollLeft + 'px';
+				div1.style.top = ev.clientY + scrollTop + 'px';
+			}
+		}
+	</script>
+</body>
+</html>

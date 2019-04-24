@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		#div1 {
+			width:100px;
+			height:200px;
+			border:1px solid red;
+			display:none;
+		}
+	</style>
+</head>
+<body>
+	<input type="button" id="btn" value="菜单" />
+	<div id="div1"></div>
+	<script type="text/javascript">
+		window.onload = function () {
+			var btn = document.getElementById('btn');
+			var dv = document.getElementById('div1');
+
+			btn.onclick = function (ev) {
+				var ev = ev || event;
+				ev.cancelBubble = true;//阻止当前事件冒泡
+				dv.style.display = 'block';
+			}
+			document.onclick = function () {
+				setTimeout(function(){
+					dv.style.display = 'none';
+				}, 1000);
+			}
+		}
+	</script>
+</body>
+</html>

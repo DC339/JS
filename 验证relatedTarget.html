@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		#left,#right {
+		float: left;
+		width: 200px;
+		height:200px;
+		line-height: 200px;
+		text-align:center;
+	}
+	#left {
+		background-color: yellow;
+	}
+	#right {
+		background-color: red;
+	}
+	</style>
+</head>
+<body>
+	<div id="left" onmouseover="logEvent(event)">divLeft</div>
+	<div id="right" onmouseout="logEvent(event)">divRight</div>
+	<div style="clear:both"></div>
+	<div id="msg"></div>
+	<script type="text/javascript">
+		function logEvent(evt){
+			//获取msg中的文本
+			var msg = document.getElementById('msg');
+			var text = msg.innerHTML;
+			msg.innerHTML = text + "event.relatedTarget.id=" + evt.relatedTarget.id+ ",event.type = " + evt.type + "<br/>";
+		}
+		
+	</script>
+</body>
+</html>

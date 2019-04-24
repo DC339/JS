@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		#div1 {
+			position: absolute;
+			width: 100px;
+			height: 100px;
+			/*background-color: red;*/
+		}
+	</style>
+</head>
+<body>
+	<input type="text" id="text" />
+	<ul id="ul1"></ul>
+	<div id="div1"></div>
+	<script type="text/javascript">
+		//留言板功能
+		var oText = document.getElementById('text');
+		var ul = document.getElementById('ul1');
+
+		oText.onkeyup = function (ev) { //事件对象ev通过函数的第一个参数传入
+			var ev = ev || event;
+			
+			if(oText.value != '') {
+				if(ev.keyCode == 13) {
+					var li = document.createElement('li');
+					li.innerHTML = this.value;
+					if(ul.children[0]) {
+						ul.insertBefore(li, ul.children[0]);
+					}else {
+						ul.appendChild(li);
+
+					}
+				}
+			}
+			
+		}
+
+
+
+
+
+		//能够响应用户输入的元素才能接收键盘事件
+		// document.onkeydown = function (ev) {
+		// 	var oDiv = document.getElementById('div1');
+		// 	var ev = ev || event;
+		// 	switch(ev.keyCode){
+		// 		case 37:
+		// 			oDiv.style.left = oDiv.offsetLeft - 10 + 'px';
+		// 			break;
+		// 		case 38:
+		// 			oDiv.style.top = oDiv.offsetTop - 10 + 'px';
+		// 			break;
+		// 		case 39:
+		// 			oDiv.style.left = oDiv.offsetLeft + 10 + 'px';
+		// 			break;
+		// 		case 40:
+		// 			oDiv.style.top = oDiv.offsetTop + 10 + 'px';
+		// 			break;
+		// 	}
+		// }
+	</script>
+</body>
+</html>

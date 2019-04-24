@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script type="text/javascript">
+		function fn () {
+			alert(this);
+		}
+		function bind(obj, evname, fn) {
+			if(obj.addEventListener) {
+				obj.addEventListener(evname, fn, false);
+			}else {
+				obj.attachEvent('on'+evname, function(){
+					fn.call(obj);
+				})
+			}
+		}
+		bind(document,'click',fn);
+	</script>
+</body>
+</html>

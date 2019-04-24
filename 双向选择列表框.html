@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		* {
+			font-size: 11pt;
+			line-height: 25px;
+		}
+		body {
+			text-align: center;
+			min-width: 760px;
+		}
+		#cont {
+			width: 720px;
+			margin: 0 auto;
+			text-align: left;
+			/*background-color: pink;*/
+			position: relative;
+		}
+		#cont .btns {
+			position: absolute;
+			left: 160px;
+			top: 0;
+		}
+		#cont div input {
+			width: 80px;
+			padding: 0;
+		}
+		select {
+			height: 200px;
+			width: 120px;
+		}
+	</style>
+</head>
+<body>
+	<div id="cont">
+		<div>
+			<select multiple="multiple" id="left" size="10">
+				<option value="a">option A</option>
+				<option value="b">option B</option>
+				<option value="c">option C</option>
+				<option value="d">option D</option>
+				<option value="e">option E</option>
+			</select>
+		</div>
+		<div class="btns">
+			<p><input type="button" value="---->" onclick="moveRight()"></p>
+			<p><input type="button" value="<----" onclick="moveLeft()"></p>
+			<p><input type="button" value="---->>" onclick="moveRightAll()"></p>
+			<p><input type="button" value="<<----" onclick="moveLeftAll()"></p>
+		</div>
+		<div style="left:300px; top: 0;position: absolute;">
+			<div>
+				<select multiple="multiple" id="right" size="10">
+				</select>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+		var opts = document.getElementsByTagName('option');
+		// for(var i=0;i<opts.length;i++){
+		// 	opts[i].onmouseover = function(){
+		// 		this.style.background = 'gray';
+		// 	}
+		// 	opts[i].onmouseout = function () {
+		// 		this.style.background = '';
+		// 	}
+		// }
+
+		function moveRight() {
+			var leftSel = document.getElementById('left');
+
+			var rightSel = document.getElementById('right');
+
+			var options = leftSel.options;
+
+			for(var i=0;i<options.length;i++){
+				if(options[i].selected) {
+					rightSel.appendChild(options[i]);
+					i--;
+				}
+			}
+		} 
+		function moveLeft(){
+			var leftSel = document.getElementById('left');
+			var rightSel = document.getElementById('right');
+			var options = rightSel.options;
+			for(var i = 0;i < options.length;i++) {
+				if(options[i].selected){
+					leftSel.appendChild(options[i]);
+					i--;
+				}
+				
+			}
+		}
+
+		function moveRightAll() {
+			var leftSel = document.getElementById('left');
+			var rightSel = document.getElementById('right');
+			var options = leftSel.options;
+			while(leftSel.length > 0){
+				rightSel.appendChild(options[0]);
+			}
+		}
+
+		function moveLeftAll() {
+			var leftSel = document.getElementById('left');
+			var rightSel = document.getElementById('right');
+			var options = rightSel.options;
+			while(rightSel.length > 0) {
+				leftSel.appendChild(options[0]);
+			}
+		}
+	</script>
+</body>
+</html>

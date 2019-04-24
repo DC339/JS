@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style tyle="text/css">
+		* {
+			font-family: Tahoma, Arial, serif;
+			font-size: 11pt;
+			line-height: 25px;
+		}
+		body {
+			text-align: center;
+			min-width: 760px;
+		}
+		a {
+			background: transparent none repeat scroll 0%;/*背景透明 无图片 重复 背景随着页面滚动而滚动 top*/
+		}
+		a:visited {
+			color: #5A3696;
+		}
+		a: active {
+			color:#FAA700;
+		}
+		a:hover{
+			background: #E3E3E3 none repeat scroll 0%;
+			text-decoration:underline;
+		}
+		#main {
+			width: 520px;
+			margin: 0 auto;
+			text-align:justify;
+		}
+		p {
+			text-indent:2em;
+		}
+		a.external {
+			background: transparent url(img/12.png) no-repeat scroll right center;
+			background-size: 13px 13px;
+			padding-right: 13px;
+		}
+	</style>
+</head>
+<body onload="init()">
+	<div id="main">
+		<p>文档对象模型（Document Object Model，简称DOM），是W3C组织推荐的处理可扩展标志语言的标准编程接口。在网页上，组织页面（或文档）的对象被组织在一个树形结构中，用来表示文档中对象的标准模型就称为DOM。Document Object Model的历史可以追溯至1990年代后期微软与Netscape的“浏览器大战”，双方为了在JavaScript与JScript一决生死，于是大规模的赋予浏览器强大的功能。微软在网页技术上加入了不少专属事物，既有VBScript、ActiveX、以及微软自家的DHTML格式等，使不少网页使用非微软平台及浏览器无法正常显示。DOM即是当时蕴酿出来的杰作。</p>
+	</div>
+	<script type="text/javascript">
+		var keywordInfo = {
+			DOM:{external: false, url:"http://www.w3.org/DOM/"},
+			W3C:{external:true, url:"http://www.w3.org"}
+		};
+
+		function init() {
+			//对谁做处理？p中的文本。
+			//获取p标签对象
+			var p=document.getElementsByTagName('p');
+			//由于p是一个集合，因此要遍历,对每个p标签中的文本做处理
+			for(var i=0;i<p.length;i++) {
+				process(p[i]);
+			}
+		}
+
+		function process(p) {
+			//要做处理，需要用到正则表达式，并且获取到需要被替换的文本
+			//对文本进行去除空字符串处理
+			var text = p.innerHTML.trim();
+			var re = buildRegexp();
+
+			var newText = text.replace(re, function(keyword) {
+				var replaceHTML = keyword;
+				var info = keywordInfo[keyword];
+				if(info){
+					// alert(1);
+					var cls = info.external ? "external": "internal";
+					replaceHTML = "<a href= '"+ info.url +"'  class= '"+ cls + "'>" + keyword + "</a>";
+					return replaceHTML;
+				}
+			})
+			p.innerHTML = newText;
+
+		}
+
+		//对字符串去除空白字符的处理
+		String.prototype.trim = function () {
+
+			var re = /^\s+|\s+$/g;
+			return this.replace(re, "");
+		};
+
+		function buildRegexp() {
+			var keys = [];
+			for(p in keywordInfo)
+				keys.push(p);
+			var re = new RegExp(keys.join('|'),"gi");
+			return re;
+		}
+	</script>
+</body>
+</html>
