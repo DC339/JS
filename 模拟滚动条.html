@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		div {
+			box-sizing: border-box;
+		}
+		#div1 {
+			position: absolute;
+			width: 30px;
+			/*min-width: 30px;*/
+			height: 500px;
+			background-color: #000;
+			left: 10px;
+			top: 10px;
+		}
+		#div2 {
+			width: 30px;
+			height: 30px;
+			background-color: red;
+			position: absolute;
+			left: 0;
+			top:0;
+		}
+		#div3 {
+			width: 500px;
+			height: 500px;
+			/*background-color: green;*/
+			position: absolute;
+			border: 1px solid green;
+			left:50px;
+			top: 10px;
+			overflow:hidden;
+		}
+		#div4 {
+			position: absolute;
+			top: 0px;
+			left: 0px;
+		}
+	</style>
+</head>
+<body>
+	<div id="div1">
+		<div id="div2"></div>
+	</div>
+	<div id="div3">
+		<div id="div4">从创立之初，百度便将“让人们最平等便捷地获取信息，找到所求”作为自己的使命，成立以来，公司秉承“用户至上”的理念，不断坚持技术创新，致力于为用户提供“简单可依赖”的互联网搜索产品及服务，其中包括:以网络搜索为主的功能性搜索;以贴吧为主的社区搜索，针对各区域、行业所需的垂直搜索;以及门户频道、IM等，全面覆盖了中文网络世界所有的搜索需求。根据第三方权威数据，在中国，百度PC端和移动端市场份额总量达73.5%，覆盖了中国97.5%的网民，拥有6亿用户，日均响应搜索60亿次。
+在面对用户的搜索产品不断丰富的同时，百度还创新性地推出了基于搜索的营销推广服务，并成为最受企业青睐的互联网营销推广平台。目前，中国已有数十万家企业使用了百度的搜索推广服务，不断提升着企业自身的品牌及运营效率。
+为推动中国数百万中小网站的发展，百度借助超大流量的平台优势，联合所有优质的各类网站，建立了世界上最大的网络联盟，使各类企业的搜索推广、品牌营销的价值、覆盖面均大面积提升。与此同时，各网站也在联盟大家庭的互助下，获得最大的生存与发展机会。
+移动互联网时代来临，百度在业界率先实现移动化转型，迎来更为广阔的发展机遇。通过开放地连接传统行业的3600行，百度从“连接人和信息”延伸到“连接人和服务”，让网民直接通过百度移动产品获得服务。目前，百度正通过持续的商业模式和产品、技术创新，推动金融、医疗、教育、汽车、生活服务等实体经济的各行业与互联网深度融合发展，为推动经济创新发展，转变经济发展方式发挥积极作用。
+作为一家以技术为信仰的高科技公司，百度将技术创新作为立身之本，着力于互联网核心技术突破与人才培养，在搜索、人工智能、云计算、大数据等技术领域处于全球领先水平。百度认为，互联网发展正迎来第三幕——人工智能，这也是百度重要的技术战略方向。百度建有世界一流的研究机构——百度研究院，广揽海内外顶尖技术英才，致力于人工智能等相关前沿技术的研究与探索，着眼于从根本上提升百度的信息服务水平。目前，百度人工智能研究成果已全面应用于百度产品，让数亿网民从中受益;同时，百度还将语音、图像、机器翻译等难度高、投入大的领先技术向业界开放，以降低大众创业、万众创新的门槛，进一步释放创业创新活力。
+作为国内的一家知名企业，百度也一直秉承“弥合信息鸿沟，共享知识社会”的责任理念，坚持履行企业公民的社会责任。成立来，百度利用自身优势积极投身公益事业，先后投入巨大资源，为盲人、少儿、老年人群体打造专门的搜索产品， 解决了特殊群体上网难问题，极大地弥补了社会信息鸿沟问题。此外，在加速推动中国信息化进程、净化网络环境、搜索引擎教育及提升大学生就业率等方面，百度也一直走在行业领先的地位。2011年初，百度还捐赠成立百度基金会，围绕知识教育、环境保护、灾难救助等议题，更加系统规范地管理和践行公益事业。</div>
+	</div>
+	<script type="text/javascript">
+		
+		window.onload = function () {
+			var dv1 = document.getElementById('div1');
+			var dv2 = document.getElementById('div2');
+			var dv3 = document.getElementById('div3');
+			var dv4 = document.getElementById('div4');
+			dv2.onmousedown = function (ev) {
+				
+				var ev = ev || event;
+
+				var disY = ev.clientY - this.offsetTop;
+
+				//红色方块的top的最大值
+				var iMaxTop =  dv1.offsetHeight - dv2.offsetHeight;
+
+				//i
+
+				document.onmousemove = function (ev) {
+
+					var ev = ev || event;
+
+					//限制范围
+					var T = ev.clientY - disY;
+
+					if( T < 0) T = 0;
+					else if ( T > iMaxTop ) T = iMaxTop;
+
+					dv2.style.top = T + 'px';
+
+					//求变化比例
+					var iScale = T / iMaxTop;
+
+					dv4.style.top =  (dv3.clientHeight - dv4.clientHeight) * iScale + 'px';
+				}
+
+				document.onmouseup = function () {
+					document.onmousemove = document.onmouseup = null;
+				}
+					
+				return false;
+			}
+				
+		}
+	</script>
+</body>
+</html>
