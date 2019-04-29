@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		#div1 {
+			z-index: 2;
+			position: absolute;
+			width: 100px;
+			height: 100px;
+			background-color: red;
+		}
+		#img1 {
+			position: absolute;
+			left: 500px;
+			top: 200px;
+		}
+	</style>
+</head>
+<body>
+	ahfjdshalfk
+	<div id="div1">
+		
+	</div>
+	<div style="position: absolute;width: 100px;height: 100px;left: 400px;top: 400px;background-color: green"></div>
+	<img id="img1" src="1.png">
+	<script type="text/javascript">
+		/*
+		1.拖拽时有文字，若文字被选中，则会产生问题
+		原因：当鼠标键被按下时，如果页面中有文字被选中，那么会触发浏览器的默认拖拽文字效果
+		解决：
+			标准下阻止默认行为
+			非标准的ie下：全局捕获
+		拖拽时图片的问题，解决方法同上
+		 */
+		window.onload = function () {
+			var dv = document.getElementById('div1');
+			var oImg = document.getElementById('img1');
+
+			drag(dv);
+			//拖拽封装
+			function drag(obj) {
+				obj.onmousedown = function (ev){
+					var ev = ev || event;
+					var disX = ev.clientX - this.offsetLeft;
+					var disY = ev.clientY - this.offsetTop;
+
+					if(obj.setCapture) {
+						obj.setCapture();
+					}
+					document.onmousemove = function(ev) {
+						var ev = ev || event;
+						//九宫格法
+						var L = ev.clientX - disX;
+						var T = ev.clientY - disY;
+						
+						var L1 = L;
+						var R1 = L + obj.offsetWidth;
+						var T1 = T;
+						var B1 = T + obj.offsetHeight;
+
+						var L2 = oImg.offsetLeft;
+						var R2 = L2 + oImg.offsetWidth;
+						var T2 = oImg.offsetTop;
+						var B2 = T2 + oImg.offsetHeight;
+
+						if (R1 < L2 || L1 > R2 || B1 < T2 || T1 > B2) {
+							oImg.src = '1.png';
+						}else {
+							oImg.src = '2.png';
+						}
+
+						obj.style.left = L + 'px';
+						obj.style.top = T + 'px';
+					}
+					document.onmouseup = function () {
+						document.onmousemove = document.onmouseup = null;
+						if(obj.setCapture) {
+							obj.releaseCapture();
+						}
+					}
+					return false;
+				}
+			}
+
+			
+			// return false;
+		}
+	</script>
+</body>
+</html>
