@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<form action="1.get.php" method="post" enctype="application/x-www-form-urlencoded">
+		<input type="button" id="btn" value="提交" />
+	</form>
+	<script language="javascript">
+		window.onload = function () {
+			var btn = document.getElementById('btn');
+			btn.onclick = function () {
+				var xhr = null;
+				try {
+					xhr = new XMLHttpRequest();
+				} catch (e) {
+					xhr = new ActiveXObject('Microsoft.XMLHttp');
+				}
+				/*
+				get获取数据的两个问题：
+					1.缓存问题 解决：加上一个随机数，例如new Date().getTime()
+					2.需要对中文进行编码
+				 */
+				// xhr.open('get', '1.get.php?username=' + encodeURI('老梁狗子') + '&age=31&' + new Date().getTime(), true);
+				// xhr.send();
+				
+				//post方式
+				//要声明数据发送的类型，无缓存问题 不需要对中文编码
+				xhr.open('post', '1.post.php', true);
+				xhr.setRequestHeader('content-type', 'application/x-www-form-urlencoded');
+				xhr.send('username=我&age=13'); //参数放在send中传输
+				xhr.onreadystatechange = function () {
+					if(xhr.readyState == 4) {
+						if(xhr.status == 200) {
+							alert(xhr.responseText);
+						}else {
+							alert("出错了！Error:" + xhr.status);
+						}
+					}
+				}
+			}
+		}
+	</script>
+</body>
+</html>

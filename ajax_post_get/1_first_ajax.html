@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<form action="1.get.php" method="get">
+		<input type="text" name="username" />
+		<input type="text" name="age" />
+		<input type="submit" value="提交" />
+	</form>
+	<script language="javascript">
+		//定义一个ajax连接
+		var xhr = null;
+		try {
+			xhr = new XMLHttpRequest();
+		} catch (e) {
+			xhr = new ActiveXObject('Microsoft.XMLHTTP');
+		}
+		//输入网址
+		xhr.open('get', '1.get.php', true)
+		//提交
+		xhr.send();
+		//等待服务器返回内容
+		/*
+			readyState:ajax工作状态
+			responseText:ajax请求返回的内容就被存放到这个属性下面
+			on readystate change：挡状态值改变时触发
+			容错处理：
+				status: 服务器状态，http状态码
+		*/
+		xhr.onreadystatechange = function () {
+			if (xhr.readyState == 4) {
+				if ( xhr.status == 200) {
+					alert(xhr.responseText);
+				}
+			}else {
+				alert('出错了,Erro:' + xhr.status);
+			}
+			
+		}
+	</script>
+</body>
+</html>
