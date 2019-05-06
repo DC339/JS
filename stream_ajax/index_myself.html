@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset='UTF-8'">
+	<title>Document</title>
+	<script type="text/javascript" src="ajax.js"></script>
+	<style type="text/css">
+		body {
+			margin: 0;
+			padding: 0;
+		}
+		#ul1 {
+			width: 1028px;
+			margin: 100px auto 0;
+		}
+		#ul1 li {
+			width: 247px;
+			float: left;
+			margin-right: 10px;
+			list-style: none;
+		}
+		#ul1 li div {
+			border: 1px solid #000;
+			padding: 10px;
+			margin-bottom: 10px;
+		}
+		#ul1 li div img {
+			width: 225px;
+			display: block;
+		}
+	</style>
+</head>
+<body>
+	<ul id="ul1">
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+	</ul>
+	<script type="text/javascript" language="javascript">
+		window.onload = function () {
+			var oUl = $('ul1');
+			var oLi = document.getElementsByTagName('li');
+			var b = true; //加载图片开关，当有数据在加载时关闭，数据加载完打开
+
+			//初始化，显示图片
+			showList();
+
+			function showList () {
+				ajax('get', 'getPics.php', 'cpage=', function (data) {
+					var d = JSON.parse(data);
+
+					//判断数据是否存在
+					if(!d) return ;
+
+					for(var i = 0; i < d.length; i++) {
+						var _index = getShort();
+						createList(d[i], _index); 
+					}
+					b = true;
+				});
+			}
+
+			//鼠标滚动时，若最短的li出现在可视区则进行图片加载
+			window.onscroll = function () {
+				//判断最短的li是否进入可视区，若进入则加载图片
+				var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+				var _index = getShort();
+				var oLiTop = getTop(oLi[_index]);
+				if(oLiTop + oLi[_index].offsetHeight < scrollTop + document.documentElement.clientHeight) {
+					if(b){
+						b = false;
+						showList();
+					}
+				}
+
+			}
+
+			//创建li中的div img p标签，并加入到list中
+			function createList (data, index) {
+				var oDiv = document.createElement('div');
+
+				var oImg = document.createElement('img');
+				oImg.src = data.image;
+
+				var oP = document.createElement('p');
+				oP.innerHTML = data.title;
+
+				oDiv.appendChild(oImg);
+				oDiv.appendChild(oP);
+
+				oLi[index].appendChild(oDiv);
+			}
+
+			//获得最短li的索引
+			function getShort() {
+				var index = 0;
+				var ih = oLi[index].offsetHeight;
+				for(var i=1; i < oLi.length; i++) {
+					if(oLi[i].offsetHeight < ih) {
+						index = i;
+						ih = oLi[i].offsetHeight;
+					}
+				}
+				return index;
+			}
+			//获得元素obj到文档顶部的距离
+			function getTop (obj) {
+				var top = 0;
+				while(obj) {
+					top += obj.offsetTop;
+					obj = obj.offsetParent;
+				}
+				return top;
+			}
+		}
+		function $(id) {
+			return typeof id == "string" ? document.getElementById(id) : id;
+		}
+	</script>
+</body>
+</html>
