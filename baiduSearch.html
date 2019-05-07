@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content = "text/html;charset='UTF-8'">
+	<title>Document</title>
+	<style type="text/css">
+		#srch {
+			/*position:absolute;*/
+			margin: 200px auto 0;
+			display: block;
+			width: 350px;
+			height: 30px;border: 1px solid #F47B0AFF;padding: 5px;font-size: 16px;
+		}
+		#ul1 {
+			
+			margin: 0 auto;
+			padding: 0;
+			width: 360px;
+			border: 1px solid #F47B0AFF;
+			display: none;
+		}
+		li {
+			list-style: none;
+		}
+		li a {
+			display: block;
+			height: 30px;line-height: 30px;text-decoration: none;
+			color: #000;
+			padding: 5px;
+		}
+		li a:hover {
+			background-color: #ccc;
+			color:#fff;
+		}
+	</style>
+</head>
+<body>
+	<input type="text" id="srch" />
+	<ul id="ul1"></ul>
+	<script type="text/javascript">
+		function fs(data) {
+			// var data = JSON.parse(data);
+			var oUl = document.getElementById('ul1');
+			var html = '';
+			if(data.g.length) {
+				oUl.style.display = 'block';
+				for (var i = 0; i < data.g.length; i++) {
+					// alert(data.g[i].q);
+					html += '<li><a target="_blank" href="https://www.baidu.com/s?wd='+ data.g[i].q +'">'+ data.g[i].q +'</a></li>';
+				}
+				oUl.innerHTML = html;
+			} else {
+				oUl.style.display = 'none';
+			}
+			
+		}
+		window.onload = function () {
+
+			var oSearch = document.getElementById('srch');
+			var oUl = document.getElementById('ul1');
+
+			oSearch.onkeyup = function () {
+				if( this.value != '' ){
+					var oScript = document.createElement('script');
+					oScript.src = 'https://www.baidu.com/sugrec?prod=pc&wd=' + this.value + '&cb=fs';
+					document.body.appendChild(oScript);
+
+				} else {
+					oUl.style.display = 'none';
+				}
+			}
+		}
+	</script>
+</body>
+</html>
