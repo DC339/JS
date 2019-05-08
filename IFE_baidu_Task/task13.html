@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="content-type" content="text/html;charset='UTF-8'">
+	<title>Document</title>
+	<style>
+		#content {
+		  border: 1px dotted #000;
+		  width: 400px;
+		  padding: 10px;
+		  color: #666;
+		  font-size: 14px;
+		}
+	</style>
+</head>
+<body>
+	<label>请输入您想说的是内容 ： 
+		<input type="text" id="txt" />
+	</label>
+	<input type="button" value="点击提交" id="btn" />
+	<div>您输入的内容为 : 
+		<p id="content">目前尚未输入内容</p>
+	</div>
+	<script type="text/javascript">
+		window.onload = function () {
+
+
+		var oBtn = document.getElementById('btn');
+		var oContent = document.getElementById('content');
+
+		oBtn.onclick = function () {
+		    var oText = document.getElementById("txt");
+		    if(oText.value != "") {
+		      oContent.innerHTML = oText.value;
+				  }else{
+				    oContent.innerHTML = "请输入内容";
+				  }
+		}
+		}
+	</script>
+</body>
+</html>
