@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset='UTF-8'">
+	<title>task18</title>
+	<style type="text/css">
+		#box div{
+			display: inline-block;
+			margin-top: 10px;
+			margin-right: 10px;
+			padding: 0 15px;
+			background-color: pink;
+			font-size: 30px;
+			height: 50px;
+			line-height: 50px;
+			text-align: center;
+		}
+	</style>
+</head>
+<body>
+	<input type="text" name="text" placeholder="请输入内容" id="text" />
+	<input type="button" id = "leftIn" value="左侧入" />
+	<input type="button" id = "rightIn" value="右侧入" />
+	<input type="button" id = "lefOut" value="左侧出" />
+	<input type="button" id = "rightOut" value="右侧出" />
+	<div id="box"></div>
+	<script type="text/javascript">
+		function each (arr, fn) {
+			for(var item = 0; item < arr.length; item++){
+				fn(arr[item], item);
+			}
+		}
+		window.onload = function () {
+			var oInput = document.getElementsByTagName('input');
+			var oBox = $('box');
+			var queue = {
+				str: [],
+				leftPush: function (num) {
+					this.str.unshift(num);
+					this.paint();
+				},
+				rightPush: function (num) {
+					this.str.push(num);
+					this.paint();
+				},
+				leftPop: function (num) {
+					if(!this.isEmpty()) {
+						this.str.shift(num);
+						this.paint();
+					}else {
+						alert("队列已经为空！");
+					}
+					
+				},
+				rightPop: function (num) {
+					if(!this.isEmpty()) {
+						this.str.pop();
+						this.paint();
+					}else {
+						alert("队列已经为空！");
+					}
+					
+				},
+				isEmpty: function () {
+					return (this.str.length == 0);
+				},
+				paint: function () {
+					var html = "";
+					// each(this.str, function (item) {
+					// 	html += "<div>" + parseInt(item) + "</div>";
+					// });
+					for(var i = 0; i < this.str.length; i++) {
+						html += "<div>" + parseInt(this.str[i]) + "</div>";
+					}
+					oBox.innerHTML = html;
+					addDivDelEvent();
+				},
+		        
+		        deleteID: function(id) {
+		            console.log(id);
+		            this.str.splice(id, 1);
+		            this.paint();
+		        }
+			};
+
+			function addDivDelEvent () {
+				for(var i=0; i< oBox.children.length; i++) {
+					//使用闭包
+					addEvent(oBox.children[i], 'click', function (cur) {
+						return function (){return queue.deleteID(cur)};
+					}(i));
+				}
+			}
+
+			addEvent(oInput[1], 'click', function () {
+				var input = oInput[0].value;
+				if((/^\d+$/).test(input)) {
+					queue.leftPush(input);
+				}else {
+					alert("请输入一个整数！");
+				}
+			});
+			addEvent(oInput[2], 'click', function () {
+				var input = oInput[0].value;
+				if((/^\d+$/).test(input)) {
+					queue.rightPush(input);
+				}else{
+					alert("请输入一个整数！");
+				}
+			});
+
+			addEvent(oInput[3], 'click', function () {
+				queue.leftPop();
+			});
+
+			addEvent(oInput[4], 'click', function() {
+				queue.rightPop();
+			});
+
+			
+			//浏览器兼容的事件绑定函数
+			function addEvent (elem, event, handler) {
+				if(!elem) return ;
+				if(elem.addEventListener) {
+					elem.addEventListener(event, handler, false);
+				}else if(elem.attachEvent) {
+					elem.attachEvent("on" + event, handler);
+				}else {
+					elem["on" + event] = handler;
+				}
+			}
+		}
+		function $(id) {
+			return typeof id == "string" ? document.getElementById(id) : id;
+		}
+	</script>
+</body>
+</html>
