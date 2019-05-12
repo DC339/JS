@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		.box {
+			margin-top: 5px;
+			}
+		.box div {
+		  display: inline-block;
+		  /*width:50px;*/
+		  height: 40px;
+		  line-height: 40px;
+		  background-color: purple;
+		  margin-right: 5px;
+		  padding: 0 10px;
+		  color: #fff;
+		  font-size: 30px;
+		  text-align: center;
+		}
+	</style>
+</head>
+<body>
+<input type="text" id="text" placeholder="请输入数字" />
+<input type="button" id="unshift" value="左侧入" />
+<input type="button" id="push" value="右侧入" />
+<input type="button" id="shift" value="左侧出" />
+<input type="button" id="pop" value="右侧出" />
+<div class="box"></div>
+	<script type="text/javascript">
+		window.onload = function () {
+			var arr = [];
+			var oText = document.getElementById('text');
+			var oInputs = document.getElementsByTagName('input');
+
+			function processArr() {
+			  
+			  for(var i = 1; i < oInputs.length; i++){
+			    
+			    (function (m) {
+			    	addEvent(oInputs[m], 'click', function () {
+			    		var value = oText.value;
+			    		if(value == "") {
+			    			alert("输入不能为空");
+			    			return ;
+			    		}
+			    		else if(!value.match(/^\d+$/)) {
+			    			alert("请输入一个数字");
+			    			return ;
+			    		}
+			    		
+			    		getOperate(oInputs[m], value);
+
+			      		createObj();
+			    	});
+			    })(i);
+			  }
+			}
+			function getOperate (obj,value) {
+			  switch(obj.id){
+			    case "unshift":
+			      arr.unshift(value);
+			      break;
+			     case "push":
+			       arr.push(value);break;
+			     case "shift":
+			     // alert(arr);
+			     	if(arr.length  == 0 ) {
+		    			alert("队列已经为空");
+		    			return ;
+		    		}
+			       arr.shift(value);break;
+			     case "pop":
+			     	if(arr.length == 0 ) {
+		    			alert("队列已经为空");
+		    			return ;
+		    		}
+			       arr.pop(value);break;    
+			  }   
+			}
+			function createObj () {
+			  var oBox = document.getElementsByClassName("box")[0];
+		      
+		      oBox.innerHTML = "";
+			  
+			  arr.forEach(function (item, index) {
+			    var oDiv = document.createElement('div');
+			    oDiv.innerHTML = item; 
+			    oBox.appendChild(oDiv);
+			  });
+			  delDiv();
+			}
+
+			function delDiv() {
+				var oBox = document.getElementsByClassName("box")[0];
+				if(oBox.children.length != 0){
+					for(var i = 0; i < oBox.children.length; i++) {
+					  	//闭包
+					  	// addEvent(oBox.children[i], 'click', function (cur) {
+					  	// 	console.log(1);
+					  	// 	return function () {
+					  	// 		return deleteID(cur);
+					  	// 	}
+					  	// }(i));
+			  			(function (k){
+							addEvent(oBox.children[k], 'click', function () {
+								
+								deleteID();
+								
+						    });
+						})(i);
+			  		}
+			  
+				}
+			}
+			function deleteID (id) {
+				arr.splice(id, 1);
+				createObj();
+			}
+			  
+			function addEvent (ele, event, handler){
+			  if(ele.addEventListener) {
+			    ele.addEventListener(event, handler, false);
+			  }else if(ele.attachEvent) {
+			    ele.attachEvent("on"+event, handler)
+			  }else {
+			    ele["on" + event] = handler;
+			  }
+			}
+			processArr();
+		}
+		
+	</script>
+</body>
+</html>
