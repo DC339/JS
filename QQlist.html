@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset='UTF-8'">
+	<title>Document</title>
+	<style type="text/css">
+		*{
+			padding: 0;
+			margin: 0;
+		}
+		div {
+			width: 150px;
+			margin: 0 10px;
+		}
+		p {
+			width:100%;
+			text-align: center;
+			line-height: 40px;
+			font-size: 20px;
+			background-color: pink;
+		}
+		ul {
+			display: none;
+		}
+
+		ul li {
+			width:150px;
+			list-style: none;
+			/*display: none;*/
+			height:20px;
+			line-height: 20px;
+			font-size: 15px;
+			text-align: center;
+			/*background-color: pink;*/
+		}
+		#active {
+			background-color: orange;
+		}
+	</style>
+</head>
+<body>
+	<div>
+		<p>分组1</p>
+		<ul id="ul1">
+			<li>111</li>
+			<li>112</li>
+			<li>113</li>
+		</ul>
+	</div>
+	<div>
+		<p>分组2</p>
+		<ul id="ul2">
+			<li>221</li>
+			<li>222</li>
+			<li>223</li>
+		</ul>
+	</div>
+	<div>
+		<p>分组3</p>
+		<ul id="ul3">
+			<li>331</li>
+			<li>332</li>
+			<li>333</li>
+		</ul>
+	</div>
+	<script type="text/javascript">
+		var oPs = document.getElementsByTagName("p");
+		var oUl = document.getElementsByTagName("ul");
+		var oLi = document.getElementsByTagName("li");
+
+		var onoff = null;
+		main();
+		function main () {
+			activeUl();
+			hoverLis();
+			
+		}
+
+		function activeUl () {
+			for(let i = 0; i < oPs.length; i++) {
+				oPs[i].onoff = true;
+				oPs[i].index = i;
+
+				addEvent(oPs[i], 'click', function(){
+					for(let i = 0; i < oPs.length; i++){
+						if(i != this.index){
+							oPs[i].id = "";
+							oUl[i].style.display = "none";
+							oPs[i].onoff = true;
+						}
+						
+					}
+					if(this.onoff){
+						this.id = "active";
+						oUl[this.index].style.display = "block";
+					}
+					else{
+						this.id = "";
+						oUl[this.index].style.display = "none";
+					}
+					this.onoff = !this.onoff;
+				});
+					
+			}
+		}
+		function hoverLis() {
+			for(let i = 0; i < oLi.length; i++) {
+				addEvent(oLi[i], 'mouseover', function () {
+					this.style.backgroundColor = "yellow";
+				})
+				addEvent(oLi[i], 'mouseout', function () {
+					this.style.backgroundColor = "";
+				})
+			}
+		}
+
+		function addEvent(ele, type, handler) {
+			if(ele.addEventListener) {
+				ele.addEventListener(type, handler, false)
+			}else if(ele.attachEvent) {
+				ele.attachEvent("on"+type, handler);
+			}else {
+				ele["on" + type] = handler;
+			}
+		}
+	</script>
+</body>
+</html>
