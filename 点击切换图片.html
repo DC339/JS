@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		body {
+			background-color: #333;
+		}
+		ul {
+			padding: 0;margin: 0;
+		}
+		li {
+			list-style: none;
+		}
+		#pic {
+			background: url(img/loader_ico.gif) no-repeat center;
+			position: relative;
+			margin: 0 auto;
+			width :400px;
+			height: 500px;
+		}
+		#pic img{
+			width: 100%;
+			height: 100%;
+		}
+		#pic ul {
+			position: absolute;
+			width: 40px;
+			top: 0;
+			right: -50px;
+		}
+		#pic li {
+			margin-bottom: 4px;
+			width: 40px;
+			height: 40px;
+			background-color: #fff;
+		}
+		#pic span {
+			top: 0;
+		}
+		#pic p {
+			padding: 0;
+			margin: 0;
+			bottom: 0;
+		}
+		#pic span, #pic p {
+			position: absolute;
+			left: 0;
+			color: #fff;
+			width: 400px;
+			height: 30px;
+			line-height: 30px;
+			text-align: center;
+		}
+		#pic .active {background-color: orange;}
+	</style>
+</head>
+<body>
+	<div id="pic">
+		<img src="" />
+		<span> 数量正在加载中  </span>
+		<p>图片正在加载中...</p>
+		<ul>
+			<!-- <li></li>
+			<li></li>
+			<li></li>
+			<li></li> -->
+		</ul>
+
+	</div>
+	<script type="text/javascript">
+		var oDiv = document.getElementsByTagName("pic");
+		var oUl = document.getElementsByTagName("ul")[0];
+		var aLis = document.getElementsByTagName("li");
+		var oImg = document.getElementsByTagName("img")[0];
+		var oSpan = document.querySelector("span");
+		var oP = document.querySelector("p");
+		var arr = ["img/1.png", "img/2.png", "img/3.png", "img/4.png"];
+		var arrText = ["图片1", "图片2", "图片3", "图片4"];
+		
+
+		var num = 0;
+		var oldLi = null;
+		//初始化
+		init();
+		function init () {
+			for( var i = 0; i < arr.length; i++) {
+				oUl.innerHTML += "<li></li>";
+			}
+			fnTab();
+			oldLi = aLis[num];
+			
+		}
+		function fnTab () {
+			oImg.src = arr[num];
+			oSpan.innerHTML = 1 + num + " / " + arr.length;
+			oP.innerHTML = arrText[num];
+			aLis[num].className = "active";
+			
+		}
+
+		var len = aLis.length;
+		for(var i = 0; i < len; i++) {
+			aLis[i].index = i;
+
+			aLis[i].onclick = function () {
+				num = this.index;
+				// 清空除了现在点击的li以外所有的li的className；
+				// for(var i = 0; i < len; i++) {
+				// 	if(i !== this.index) {
+				// 		aLis[i].className = "";
+				// 	}
+				// }
+				//清空上一个点击的li
+				oldLi.className = "";
+				fnTab();
+				oldLi = this;
+				
+			}
+		}
+		
+	</script>
+</body>
+</html>

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>qq列表展开</title>
+	<style type="text/css">
+		ul, h2 { padding: 0;margin: 0; }
+		li { list-style: none; }
+
+		#list {
+			margin: 0 auto;
+			width: 150px;
+			border: 1px solid #333;
+		}
+		#list h2 {
+			cursor: pointer;
+			width: 150px;
+			height: 30px;
+			line-height: 30px;
+			text-indent: 20px;
+			background: url(img/ico1.gif) no-repeat 5px center #3F9DBFFF;color: #fff;
+		}
+		#list ul {display: none}
+		#list ul li{ border-bottom: 1px solid #333; width:150px; height: 30px; line-height: 30px;text-indent: 24px; }
+		#list ul li:last-child { border-bottom: 0; }
+		#list ul .hover {background-color: yellow}
+		#list .active {
+			background: url(img/ico1.gif) no-repeat 5px center orange;color: #fff
+		}
+	</style>
+</head>
+<body>
+	<ul id="list">
+		<li class="lis">
+			<h2>分组一</h2>
+			<ul>
+				<li>第一个人</li>
+				<li>第二个人</li>
+				<li>第三个人</li>
+			</ul>
+		</li>
+		<li class="lis">
+			<h2>分组二</h2>
+			<ul>
+				<li>第一个人</li>
+				<li>第二个人</li>
+				<li>第三个人</li>
+				<li>第四个人</li>
+				<li>第五个人</li>
+				<li>第六个人</li>
+			</ul>
+		</li>
+		<li class="lis">
+			<h2>分组三</h2>
+			<ul>
+				<li>只有一个人</li>
+			</ul>
+		</li>
+	</ul>
+	<script type="text/javascript">
+		
+		//获取显示的元素
+		var oUl =  document.getElementById("list");
+		//获取索要点击事件对象
+		var aH2s = oUl.getElementsByTagName("h2");
+		var aUl = oUl.getElementsByTagName("ul");
+		var onOff = true;
+		var aLis = null;
+		var arrLi = [];
+
+		//h2的操作
+		var len = aH2s.length;
+		for(var i=0;i<len;i++) {
+			aH2s[i].index = i;
+			aH2s[i].onOff = true;
+
+			aH2s[i].onclick = function () {
+				
+				for(var i = 0; i < len; i++) {
+					if( i !== this.index){
+						aH2s[i].className = "";
+						aUl[i].style.display = "none";
+						aH2s[i].onOff = true;
+					}
+					
+				}
+				if(this.onOff){
+					this.className = "active";
+					aUl[this.index].style.display = "block";
+				}else {
+					this.className = "";
+					aUl[this.index].style.display = "none";
+				}
+				this.onOff = !this.onOff;
+				
+			}
+
+		}
+		//li的操作
+		//得到lis
+		for(var i = 0; i < aUl.length; i++) {
+			aLis = aUl[i].getElementsByTagName("li");
+			for(var j = 0; j < aLis.length; j++) {
+				arrLi.push(aLis[j]);
+			}
+		}
+
+		for(var i = 0; i < arrLi.length; i++) {
+			arrLi[i].onmouseover = function () {
+				this.style.backgroundColor = "yellow";
+			}
+			arrLi[i].onmouseout = function () {
+				this.style.backgroundColor = "";
+			}
+			arrLi[i].index = i;
+			arrLi[i].onOff = true;
+			arrLi[i].onclick = function () {
+				for(var i=0;i<arrLi.length;i++){
+					if(i !== this.index){
+						arrLi[i].className = "";
+						// arrLi[i].style.display = "block";
+						arrLi[i].onOff = true;
+					}
+					
+				}
+				if(this.onOff){
+					this.className = "hover";
+					this.onOff = false;
+				}else {
+					this.style.display = "none";
+				}
+				
+			}
+		}
+	</script>
+</body>
+</html>
