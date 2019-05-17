@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		ul,h3{ margin: 0;padding: 0; }
+		li{list-style: none;}
+
+		.wrap{margin: 100px auto;width: 500px;border: 1px solid #0FEDEFFF;}
+		h3 { height: 30px;line-height: 30px;background-color: #43BB99FF; /*text-indent: 20px;*/ padding: 5px 10px;}
+		.wrap li{ padding: 5px 10px;height: 30px;line-height: 30px;border-bottom: 1px solid #0FEDEFFF }
+		.wrap li:last-child{ border-bottom:none; }
+		.hide { display: none;width: 500px; }
+		.hide button{ color:#43BB99FF;background-color: #fff;outline: none;border: 1px solid #43BB99FF; }
+
+	</style>
+</head>
+<body>
+	<div class="wrap">
+		<h3>分类名称</h3>
+		<ul id="list">
+			<li>
+				<div class="show">
+					<strong>远程课堂开班啦~</strong>
+					<img src="img/pen.png">
+				</div>
+				<div class="hide">
+					<input type="text">
+					<button>保存</button>
+					<button>取消</button>
+				</div>
+			</li>
+			<li>
+				<div class="show">
+					<strong>远程课堂开班啦~</strong>
+					<img src="img/pen.png">
+				</div>
+				<div class="hide">
+					<input type="text">
+					<button>保存</button>
+					<button>取消</button>
+				</div>
+			</li>
+			<li>
+				<div class="show">
+					<strong>远程课堂开班啦~</strong>
+					<img src="img/pen.png">
+				</div>
+				<div class="hide">
+					<input type="text">
+					<button>保存</button>
+					<button>取消</button>
+				</div>
+			</li>
+		</ul>
+	</div>
+	<script type="text/javascript">
+		window.onload = function () {
+			var oList = document.getElementById("list");
+			var aLi = oList.getElementsByTagName("li");
+			
+
+			for(var i=0;i<aLi.length;i++){
+				tab(aLi[i]);
+			}
+			function tab(m){
+				var aDiv = m.getElementsByTagName("div");
+				var oStrong = aDiv[0].getElementsByTagName("strong")[0];
+				var oImg = aDiv[0].getElementsByTagName("img")[0];
+				var aBtn = aDiv[1].getElementsByTagName("button");
+				var oIpt = aDiv[1].getElementsByTagName("input")[0];
+				// console.log(aDiv[0]);
+				
+				oImg.onclick = function () {
+					aDiv[0].style.display = "none";
+					aDiv[1].style.display = "block";
+					aBtn[0].onclick = function () {
+						oStrong.innerHTML = oIpt.value;
+						aDiv[0].style.display = "block";
+						aDiv[1].style.display = "none";
+						
+					}
+					aBtn[1].onclick = function () {
+						aDiv[0].style.display = "block";
+						aDiv[1].style.display = "none";
+						
+					}
+					
+				}
+			}
+		
+
+
+		}
+	</script>
+</body>
+</html>
