@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		.box {
+			position: relative;
+			height: 120px;
+			margin-top: 5px;
+			}
+		.box div {
+			position: absolute;
+			bottom: 0;
+		  display: inline-block;
+		  width:25px;
+		  background-color: purple;
+		  margin-right: 5px;
+		}
+	</style>
+</head>
+<body>
+	<input type="text" id="text" />
+	<input type="button" id="unshift", value="左侧入" />
+	<input type="button" id="push", value="右侧入" />
+	<input type="button" id="shift", value="左侧出" />
+	<input type="button" id="pop", value="右侧出" />
+	<input type="button" id="bubbleSort", value="冒泡" />
+	<input type="button" id="quickSort", value="快排" />
+	<input type="button" id="selectSort", value="选择" />
+	<!-- <input type="button" id="insertSort", value="插入" /> -->
+	<!-- <input type="button" id="shuffle", value="打乱" /> -->
+	<button id="random">随机产生20个数</button>
+
+	<div class="box">
+		<!-- <div style="left: 0px;height: 70px"></div> -->
+		<!-- <div style="left: 30px;height: 70px"></div> -->
+
+	</div>
+	<script type="text/javascript">
+		window.onload = function () {
+			var oText = document.getElementById('text');
+			var oInputs = document.getElementsByTagName('input');
+			var oBox = document.querySelector('.box');
+			var random = document.getElementById('random');
+			// console.log(oBox);
+			// var arr=[33, 54, 82, 20, 17];
+			var arr = [];
+
+			main();
+			function main () {
+				var btn = false;
+				if(!btn){
+					addEvent(random, 'click', function () {
+						arr = [];
+						randomSort();
+						// console.log(arr);
+						// clickOperation(arr);
+						// btn = !btn;
+					});
+				}
+				
+				clickOperation();
+			}
+
+			function clickOperation () {
+				for(let i = 1; i < oInputs.length; i++) {
+					addEvent(oInputs[i], 'click', function () {
+				// console.log(arr);
+
+						var value = oText.value;
+						arrEvent(oInputs[i], value);
+					});
+				}
+			}
+
+			function arrEvent(obj, value) {
+				if(arr.length == 0) {
+					alert("输入不能为空");
+					return ;
+				}else if(arr.length > 60) {
+					alert("输入数值已达上限60");
+					return ;
+				}else {
+					switch(obj.id)
+					{
+						case "unshift":
+							if (!value.match(/^\d+$/) || value < 10 || value> 100){
+								alert("请输入一个10-100的整数");
+								return ;
+							}
+							arr.unshift(value);break;
+						case "push":
+							if (!value.match(/^\d+$/) || value < 10 || value> 100){
+								alert("请输入一个10-100的整数");
+								return ;
+							}
+							arr.push(value);break;
+						case "shift":
+							if(arr.length == 0) {
+								alert("队列已经为空");
+								return ;
+							}
+							arr.shift(value);break;
+						case "pop":
+							if(arr.length == 0) {
+								alert("队列已经为空");
+								return ;
+							}
+							arr.pop(value);break;
+						case "bubbleSort":
+							bubbleSort(arr);break;
+						case "quickSort":
+							quickSort(arr, 0, arr.length);break;
+						case "randomSort":
+							randomSort();break;
+						case "selectSort":
+							selectSort(arr);break;
+						// case "insertSort":
+							// insertSort(arr);break;
+					}
+					paint();
+					delDiv();
+				}
+			}
+
+			    //随机生成20个li
+		    function randomSort() {
+		    	var oBox = document.querySelector('.box');
+		        oBox.innerHTML = "";
+		        // queue = [];
+		        // var fragment = document.createDocumentFragment();
+
+		        for (var i = 0; i < 20; i++) {
+		            var value = 10 + parseInt(90 * Math.random());
+		            var dvs = document.createElement("div");
+		            dvs.style.height = value + "px";
+		            dvs.style.left = i * 30 + "px";
+		            oBox.appendChild(dvs);
+		            arr.push(value);
+		            console.log(oBox);
+		        }
+
+		        // oBox.appendChild(fragment);
+		        return arr;
+		    }
+		   
+
+			function swap(ele1, ele2) {
+			    var temp = ele1.offsetHeight;
+
+			    ele1.offsetHeight = ele2.offsetHeight;
+			    ele1.style.height = ele2.offsetHeight + "px";
+			    ele2.offsetHeight = temp;
+			    ele2.style.height = temp + "px";
+
+			    // 如果只是相邻元素swap，可以使用下面这个方法直接交换dom元素
+			    // 但是考虑到非冒泡排序算法使用swap时不一定是交换相邻元素(比
+			    // 如插入排序)，所以使用交换高度的方法。注意ele.style.height
+			    // 和ele.offsetHeight都需要互换
+
+			    // ele1.parentNode.insertBefore(ele2, ele1);
+			};
+
+			function bubbleSort(arr) {
+			    var eles = document.querySelector('.box').children,
+			        len  = eles.length, i, j = 0, delay = 30, timer;
+
+			    i = len - 1;
+			    timer = setInterval(function() {
+			        if(i < 1) {
+			            clearInterval(timer);
+			        }
+			        if(j == i) {
+			            --i;
+			            j = 0;
+			        }
+			        if (eles[j].offsetHeight > eles[j+1].offsetHeight) {
+			            swap(eles[j], eles[j+1]);
+			            temp = arr[j];
+			            arr[j] = arr[j+1];
+			            arr[j+1] = temp;
+			        }
+			        ++j;
+			    }, delay);
+			};
+
+			function selectSort(arr) {
+			    var eles = document.querySelector('.box').children,
+			        len  = eles.length, i = 0, j = 1, min = 0, delay = 50, timer;
+
+			    timer = setInterval(function() {
+			        if(i == len - 1) {
+			            clearInterval(timer);
+			        }
+			        if(j == len) {
+			            swap(eles[i], eles[min]);
+			            temp = arr[i];
+			            arr[i] = arr[min];
+			            arr[min] = temp;
+			            ++i;
+			            min = i;
+			            j = i + 1;
+			        }
+			        if(eles[j] && eles[j].offsetHeight < eles[min].offsetHeight) {
+			            min = j;
+			        }
+			        ++j;
+			    }, delay);
+			};
+
+			    //快速排序
+		    function quickSort(arr, left, right) {
+		        var list = document.querySelector('.box').children;
+
+		        if (right - left >= 1) {
+		            var
+		                i = left,
+		                j = right,
+		                k = arr[i],
+		                temp;
+		            while (i != j) {
+		                for (; j>i; j--){
+		                if (arr[j] < k) {
+		                    temp = arr[j];
+		                    arr[j] = arr[i];
+		                    arr[i] = temp;
+		                    list[i].style.height = arr[i]  + "px";
+		                    list[j].style.height = arr[j]  + "px";
+		                    break;
+		                }
+		            }
+
+		            for (; j > i; i++) {
+		                if (arr[i] > k) {
+		                    temp = arr[j];
+		                    arr[j] = arr[i];
+		                    arr[i] = temp;
+
+
+		                    list[i].style.height = arr[i]  + "px";
+		                    list[j].style.height = arr[j]  + "px";
+		                    break;
+		                }
+		            }
+		        }
+
+		        setTimeout(function(){
+		            arr = quickSort(arr, left, i - 1);
+		            arr = quickSort(arr, i + 1, right);
+		        }, 200);
+		    }
+
+		        return arr;
+		    }
+
+			// /**
+			//  * 用两个变量控制内外循环
+			//  */
+			// function insertSort(queue) {
+			//     var eles = document.querySelector('.box').children,
+			//         len  = eles.length,
+			//         temp, i = 1, j = 0, timer, delay = 100, outer = true, inner = false;
+
+			//     timer = setInterval(function() {
+			//         if(outer) {
+			//             if(i == len) {
+			//                 clearInterval(timer);
+			//                 return ;
+			//             }
+			//             if(eles[i].offsetHeight < eles[i-1].offsetHeight) {
+			//                 temp = eles[i].offsetHeight;
+			//                 j = i - 1;
+			//                 outer = false;
+			//                 inner = true;
+			//             } else {
+			//                 i++;
+			//             }
+			//         }
+			//         if(inner) {
+			//             if(j < 0 || eles[j].offsetHeight < temp) {
+			//                 eles[j+1].style.height = temp + "px";
+			//                 eles[j+1].offsetHeight = temp;
+			//                 i++;
+			//                 inner = false;
+			//                 outer = true;
+			//             } else {
+			//                 eles[j+1].style.height = eles[j].style.height;
+			//                 eles[j+1].offsetHeight = eles[j].offsetHeight;
+			//                 j--;
+			//             }
+			//         }
+			//     }, delay);
+			// };
+
+
+			function delDiv () {
+				var oBox = document.querySelector('.box');
+				for(let i = 0; i < oBox.children.length; i++) {
+					addEvent(oBox.children[i], 'click', function () {
+						arr.splice(i, 1);
+						paint();
+					});
+				}
+			}
+
+			function paint() {
+				// console.log(arr);
+				oBox.innerHTML = "";
+				var html = "";
+				for(let i = 0; i < arr.length;i++) {
+					var div = document.createElement('div');
+					// div.innerHTML = arr[i];
+					div.style.left = i * 30 + "px";
+					div.style.height = arr[i] + 'px';
+					oBox.appendChild(div);
+				}
+			}
+
+			function addEvent(ele, event, handler){
+				if(ele.addEventListener) {
+					ele.addEventListener(event, handler, false);
+				}else if (ele.attachEvent) {
+						ele.attachEvent("on" + event, handler);
+				}else {
+					ele["on" + event] = handler;
+				}
+			}
+		}
+		
+	</script>
+</body>
+</html>
