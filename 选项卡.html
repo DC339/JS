@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		ul,p,img{ margin: 0;padding: 0; }
+		li{list-style: none;}
+		#list { width: 1020px;margin: 0 auto; }
+		#list .left { float: left; }
+		#list .left li { height: 80px;width: 150px;padding-top:10px;background-color: #BEE;text-align: center;border-bottom: 1px solid #999; }
+		#list .right {float: left;}
+		#list .lis { position: relative; }
+		#list .lis ul { position: absolute; bottom: 4px;left:0; }
+		#list .right li { float: left; width: 265px; height: 30px;line-height: 30px;text-align: center; background-color: #000; color: #fff;margin-right: 5px;opacity: .7}
+		.clearfix:after { content:"."; height: 0;display: block;visibility: hidden;clear: both }
+	</style>
+</head>
+<body>
+	<div id="list" class="clearfix">
+		<div class="left">
+			<ul>
+				<li>
+					<img src="img/ico-1.png" />
+					<p>最热团购</p>
+				</li>
+				<li>
+					<img src="img/ico-2.png" />
+					<p>最热团购</p>
+				</li>
+				<li>
+					<img src="img/ico-3.png" />
+					<p>最热团购</p>
+				</li>
+				<li>
+					<img src="img/ico-4.png" />
+					<p>最热团购</p>
+				</li>
+			</ul>
+		</div>
+		<div class="right">
+			<div class="lis">
+				<img src="img/1.jpeg"  width="810px" height="364px" />
+			
+				<ul class="clearfix">
+					<li>全场五折</li>
+					<li>全场五折</li>
+					<li>全场五折</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+		window.onload = function () {
+			var oDiv = document.getElementById("list");
+			var aDiv = oDiv.children;
+			// console.log(aDiv);
+			var aLis1 = aDiv[0].getElementsByTagName("li");
+			var oImg = aDiv[1].getElementsByTagName("img")[0];
+			var len1 = aLis1.length;
+			var color = "#fff";
+
+			var aLis2 = aDiv[1].getElementsByTagName("li");
+			var len2 = aLis2.length;
+			var color1 = "red";
+
+			var arrUrl = ["img/2.jpg", "img/3.jpg", "img/4.jpg", "img/5.jpg"];
+			var arrUrl2 = ["img/7.jpg", "img/8.jpg", "img/9.jpg"];
+			// for(var i=0;i<len1;i++) {
+			// 	tab(aLis1, len1);
+			// }
+			tab(aLis1, len1, color, arrUrl);
+			tab(aLis2, len2, color1, arrUrl2);
+			function tab(aLis1, len, color, arrUrl) {
+				for(var i=0;i<len;i++){
+					aLis1[i].index = i;
+					//设置点击事件
+					// aLis1[i].onclick = function () {
+					// 	for(var i = 0; i < aLis1.length;i++){
+					// 		aLis1[i].style.backgroundColor = "";
+					// 	}
+					// 	this.style.backgroundColor = "#fff";
+					// 	oImg.src = arrUrl[this.index];
+					// }
+					aLis1[i].onmouseover = function () {
+						this.style.backgroundColor = color;
+						oImg.src = arrUrl[this.index];
+					}
+					aLis1[i].onmouseout = function () {
+						this.style.backgroundColor = "";
+					}
+				}
+			}
+			
+
+		}
+	</script>
+</body>
+</html>
