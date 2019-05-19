@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>百度文库评分</title>
+	<style>
+		ul,p,img { padding: 0; margin: 0}
+		#content { margin:100px auto;width: 600px;height: 60px; position: relative;border: 1px solid #000}
+		li { padding:0;margin:0;list-style: none; position: absolute;line-height:60px;}
+		ul li#left { top:0;left:10px; width: 80px;}
+		ul li#right { top:3px;left: 90px;  }
+		ul li#text { top: 10px;left: 240px;height: 40px;line-height: 40px; padding: 0 10px;}
+		#text span {text-indent: 10px;color: #999; font-size: 14px;}
+		#left span { color: red; }
+
+		.hide { display: none; }
+	</style>
+</head>
+<body>
+	<ul id="content">
+		<li id="left">
+			<p><span>*</span>总体评价:</p>
+		</li>
+		<li id="right">
+			<img src="img/1.jpg" alt="">
+			<img src="img/1.jpg" alt="">
+			<img src="img/1.jpg" alt="">
+			<img src="img/1.jpg" alt="">
+			<img src="img/1.jpg" alt="">
+		</li>
+		<li id="text" class="hide">
+			<img src="img/4.jpg" alt="">
+
+		</li>
+	</ul>
+	<script type="text/javascript">
+		window.onload = function () {
+			var oContent = document.getElementById("content");
+			var aLi = oContent.getElementsByTagName("li");
+			var str = aLi[2].innerHTML;
+
+			var range = ["较差", "较差", "还行", "推荐", "力荐"];
+
+			oContent.onmouseover = function () {
+				aLi[2].className = "";
+			}
+			oContent.onmouseout = function () {
+				aLi[2].className = "hide";
+			}
+
+			var aImg = aLi[1].getElementsByTagName("img");
+
+			tab();
+			function tab () {
+				for(var i=0;i<aImg.length;i++ ){
+					aImg[i].index = i;
+					 
+					aImg[i].onmouseover = function () {
+						if(this.index < 2){
+							for(var i=0;i<this.index+1;i++){
+								aImg[i].src = "img/3.jpg";
+								aLi[2].innerHTML = range[this.index];
+							}
+						}
+						else{
+							for(var i=0;i<this.index+1;i++){
+								aImg[i].src = "img/2.jpg";
+
+								if(i == 2) {aLi[2].innerHTML = "还行";continue;}
+								aLi[2].innerHTML = range[this.index];
+								
+
+							}
+						}
+						
+					}
+
+					aLi[1].onmouseout = function () {
+						for(var i = 0; i < aImg.length;i++){
+							aImg[i].src = "img/1.jpg";
+						}
+						aLi[2].innerHTML = str;
+					}
+					
+				}
+			}
+			
+			
+			
+		}
+	</script>
+</body>
+</html>
