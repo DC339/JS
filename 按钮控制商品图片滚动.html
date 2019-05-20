@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>按钮控制商品图片滚动</title>
+	<style>
+		h2,p,ul,li { margin: 0; padding: 0 }
+		li { list-style: none }
+		#box { width: 200px; margin: 0 auto; border: 1px solid #ccc;border-radius: 5px;height: 460px;}
+		h2 { width:200px;height: 20px;line-height: 20px;text-align: center;background-color: blue; color: #fff; font-size: 14px; }
+		.content { width: 200px; height: 440px; text-align: center;  position: relative;}
+		.content p { width: 200px;height: 20px;background-color: #ccc;}
+		ul { height: 400px; overflow: hidden; }
+		ul li { width: 200px;height: 100px;line-height: 100px;border-bottom: 1px solid #ccc  }
+
+	</style>
+</head>
+<body>
+	<script type="text/javascript">
+		window.onload = function () {
+			var oBox = document.getElementById("box");
+			var aPs = oBox.getElementsByTagName("p");
+			var oUl = document.getElementsByTagName("ul")[0];
+			var aLi = oUl.getElementsByTagName("li")[0];
+			var num = 0;
+			var timer = null;
+			
+			aPs[0].onmousedown = function () {
+				// clearInterval(timer);
+				timer = setInterval(function(){
+					num > 600 ? clearInterval(timer) : num++;
+					aLi.style.marginTop = -num + 'px';
+				},20)
+				this.style.backgroundColor = "#999";
+				
+			} 
+			aPs[0].onmouseup = function () {
+				clearInterval(timer);
+				this.style.backgroundColor = "#ccc";
+			}
+
+			aPs[1].onmousedown = function () {
+				// clearInterval(timer);
+				timer = setInterval(function(){
+					num < 0 ? clearInterval(timer) : num--;
+					aLi.style.marginTop = -num + 'px';
+				},20)
+				this.style.backgroundColor = "#999";
+				
+			} 
+			aPs[1].onmouseup = function () {
+				clearInterval(timer);
+				this.style.backgroundColor = "#ccc";
+			} 
+		}
+	</script>
+	<div id="box">
+		<h2>菜单</h2>
+		<div class="content">
+			<p class="top">up</p>
+			<ul>
+				<li>a</li>
+				<li>b</li>
+				<li>c</li>
+				<li>d</li>
+				<li>e</li>
+				<li>f</li>
+				<li>g</li>
+				<li>h</li>
+				<li>i</li>
+				<li>j</li>
+			</ul>
+			<p class="bot">down</p>
+		</div>
+	</div>
+</body>
+</html>
