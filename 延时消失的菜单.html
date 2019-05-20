@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		ul,dl,dd,dt,div,li { margin: 0; padding: 0 }
+		li { list-style: none; }
+		a { text-decoration: none;cursor: pointer;display: inline-block; margin: 0 10px; color: #fff; padding: 0 5px;}
+		dt a:hover { background-color: #FF5B4BFF; border-radius: 5px}
+		li a:hover { text-decoration: underline; }
+		#box { width: 600px;margin: 100px auto;}
+		dt { color: #fff; position: relative; padding: 15px 0;}
+		dl { width: 600px; border-radius: 8px; padding: 0 10px; background-color: #4FB99DFF; position: relative; }
+		ul.inner {padding: 0 10px}
+		li { height: 30px;line-height: 30px; float: left; }
+		li:last-child { float: right; }
+		dt a:last-child { position: absolute;right:0;top:15px; }
+		.inner li a { color: #4FB99DFF; text-align: center }
+		dd { height: 30px;border: 1px solid #ccc; border-radius: 5px; font-size:12px;position: absolute;top: 60px; background-color: #fff; }
+		dl dd:nth-child(2) { left: 0; }
+		dl dd:nth-child(3) { left: 0; }
+		dl dd:nth-child(4) { left: 30px; }
+		dl dd:nth-child(5) { left: 90px; }
+		.hide { display: none }
+		.clearfix:after{ content: "."; height: 0;display: block; visibility: hidden;clear:both; }
+	</style>
+</head>
+<body>
+	<script>
+		window.onload = function () {
+			var oDl = document.getElementsByClassName("out")[0];
+			var oDt = oDl.getElementsByTagName("dt")[0];
+			var aA = oDt.getElementsByTagName("a");
+			var aDd = oDl.getElementsByTagName("dd");
+			var timer = null;
+			var arr= [];
+
+			for( var i = 0; i < aA.length-1; i++) {
+				aA[i].index = i;
+				aDd[i].index = i;
+				aA[i].onmouseover = show;
+				aA[i].onmouseout = hide;
+				aDd[i].onmouseover = show;
+				aDd[i].onmouseout = hide;
+
+				function show() {
+					clearInterval(timer);
+					for(var i = 0; i < aA.length-1; i++) {
+						aDd[i].className = "hide";
+					}
+					aDd[this.index].className = "";
+				}
+				function hide() {
+
+					var index = this.index;
+					timer = setTimeout(function(){
+						aDd[index].className = "hide";
+					}, 500);
+				}
+				
+			}
+			
+			
+		}
+	</script>
+	<div id="box" class="clearfix">
+		<dl class="out">
+			
+			<dt class="show clearfix"><a>首页</a>|<a>关于我们</a>|<a>作品</a>|<a>github</a><a>更多...</a></dt>
+			<dd id="hide" class="hide">
+				<ul class="inner clearfix">
+					<li><a>最新更新</a><a>|</a></li>
+					<li><a>活动</a><a>|</a></li>
+					<li><a>值得关注</a><a>|</a></li>
+					<li><a>反馈</a></li>
+				</ul>
+			</dd>
+			<dd id="hide" class="hide">
+				<ul class="inner clearfix">
+					<li><a>最新更新</a><a>|</a></li>
+					<li><a>活动</a><a>|</a></li>
+					<li><a>值得关注</a><a>|</a></li>
+					<li><a>反馈</a></li>
+				</ul>
+			</dd>
+			<dd id="hide" class="hide">
+				<ul class="inner clearfix">
+					<li><a>最新更新</a><a>|</a></li>
+					<li><a>活动</a><a>|</a></li>
+					<li><a>值得关注</a><a>|</a></li>
+					<li><a>反馈</a></li>
+				</ul>
+			</dd>
+			<dd id="hide" class="hide">
+				<ul class="inner clearfix">
+					<li><a>最新更新</a><a>|</a></li>
+					<li><a>活动</a><a>|</a></li>
+					<li><a>值得关注</a><a>|</a></li>
+					<li><a>反馈</a></li>
+				</ul>
+			</dd>
+		</dl>
+	</div>
+</body>
+</html>
