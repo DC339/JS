@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>按钮控制商品图片滚动</title>
+	<style>
+		div,ul,li { margin: 0; padding: 0 }
+		li { list-style: none }
+		#box { width: 600px;height: 530px;line-height: 530px; margin: 100px auto; border: 1px solid #ccc; position: relative;}
+		#box ul, #box .img { position: absolute; top:0; }
+		#box ul:first-child{ left: 0; }
+		#box ul:last-child{ right: 0; }
+		#box .img { left: 85px;top:50px; }
+		#box .img { width: 430px;height: 430px;  }
+		#box ul { padding: 20px 5px; }
+		#box ul li { width:60px;height: 50px;line-height: 50px;border: 1px solid #ccc; border-radius: 10px; text-align:center; margin-bottom: 20px;}
+		.active { background-color: orange; }
+		.clearfix:after { content: ".";display: block;height: 0;visibility: hidden;clear: both; }
+	</style>
+</head>
+<body>
+	<script type="text/javascript">
+		window.onload = function () {
+			var arrUrl = ["img/1.jpg", "img/2.jpg", "img/3.jpg", "img/4.jpg", "img/5.jpg", "img/6.jpg", "img/7.jpg", "img/8.jpg", "img/9.jpg", "img/10.jpg", "img/11.jpg", "img/12.jpg", "img/13.jpg", "img/14.jpg"];
+
+			var oBox = document.getElementById("box");
+			var oImg = oBox.getElementsByTagName("img")[0];
+			var aLi = oBox.getElementsByTagName("li");
+			var num = 0;
+			var str = null;
+
+			autoPlay();
+			function autoPlay() {
+				timer = setInterval(function(){
+					num++;
+					num > 12 ? clearInterval(timer):num %= 14;
+					change();
+				}, 800);
+			}
+
+			function change(){
+				for(var j=0;j<aLi.length-1;j++){
+					aLi[j].className = "";
+				}
+				console.log(arrUrl[num]);
+				oImg.src = arrUrl[num];
+				aLi[num].className = "active";
+					
+			}
+		}
+	</script>
+	<div id="box" class="clearfix">
+		<ul>
+			<li class="active">连衣裙</li>
+			<li>连衣裙</li>
+			<li>连衣裙</li>
+			<li>连衣裙</li>
+			<li>连衣裙</li>
+			<li>连衣裙</li>
+			<li>连衣裙</li>
+		</ul>
+		<div class="img"><img src="img/1.jpg"></div>
+		<ul>
+			<li>连衣裙</li>
+			<li>连衣裙</li>
+			<li>连衣裙</li>
+			<li>连衣裙</li>
+			<li>连衣裙</li>
+			<li>连衣裙</li>
+			<li>连衣裙</li>
+		</ul>
+	</div>
+</body>
+</html>
