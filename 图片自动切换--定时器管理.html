@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>定时器管理--图片切换</title>
+	<style>
+		ul,li,p { margin: 0; padding: 0; }
+		li { list-style: none }
+		#box { width: 400px;height:400px;margin: 100px auto;padding: 6px;box-shadow: 0 2px 15px rgba(0,0,0,.3);overflow: hidden; }
+		#box div.cont{ width: 400px;height:400px; position: relative; }
+		#box img{ width: 400px;height:400px; }
+		#box #text { position: absolute;left:0;bottom:-110px;width: 400px; height:100px;background-color: rgba(0,0,0,.5);color:#fff;}
+		#text p,#text span { width: 400px; display: inline-block;box-sizing: border-box;padding: 5px 10px 0 10px;  }
+		#text p { font-size:18px; }
+		#text span { font-size:15px; }
+	</style>
+	<script type="text/javascript" src="miaov.js"></script>
+</head>
+<body>
+	<script type="text/javascript">
+		window.onload = function () {
+			var oImg = document.getElementsByTagName("img")[0];
+			var oText = document.getElementById("text");
+			var oP = oText.getElementsByTagName("p")[0];
+			var oSpan = oText.getElementsByTagName("span")[0];
+			var arrUrl=["img/1.jpg","img/2.jpg","img/3.jpg", "img/4.jpg"];
+			var arrText = ["内容简介一", "内容简介二", "内容简介三","内容简介四"];
+			var num = 0,timers = null, onOff=true;
+			function init(){
+				oP.innerHTML = arrText[0];
+				oImg.src = arrUrl[0];
+				oSpan.innerHTML = "国内资深的前端开发培训机构,妙味课堂拥有系统的 JavaScript、HTML5、CSS3、移动开发等课程,并录制成最系统的前端";
+				
+				// onOff=true;
+			}
+			init();
+			
+			showhide(oImg, function () {
+				setTimeout(function(){
+					doMove(oText, 'bottom', 20, -110);
+					onOff = true;
+				}, 500)
+			})
+
+			function showhide(obj,endFn){
+				
+				clearInterval(timers);
+				timers = setInterval(function(){
+					if(onOff){
+						doMove(oText, 'bottom', 20, 0);
+						onOff = false;
+						num++;
+						num %= 4;
+						oImg.src = arrUrl[num];
+						oP.innerHTML = arrText[num];
+					}
+					else {
+						endFn && endFn();
+					}
+				}, 2000);
+			}
+			
+		}
+	</script>
+	<ul id="box">
+		<li>
+			<div class="cont">
+				<img src="img/1.jpg" />
+				<div id="text">
+					<p></p>
+					<span></span>
+				</div>
+			</div>
+		</li>
+	</ul>
+	
+</body>
+</html>
