@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		#box { width: 100px;height: 100px;background-color: #9FF; position: absolute;top:40px;left:10px;}
+		
+	</style>
+</head>
+<body>
+	<input id="btn1" type="button" value="往后" />
+	<input id="btn2" type="button" value="往前" />
+	<div id="box"></div>
+	<script>
+		window.onload = function () {
+			var aInp = document.getElementsByTagName("input");
+			var oDiv = document.querySelector("div");
+
+			aInp[0].onclick = function () {
+				doMove(oDiv, 'left', 20, 10);
+			}
+			aInp[1].onclick = function () {
+				doMove(oDiv, 'left', 20, 800, function () {
+					doMove(oDiv, 'top', 20, 500);
+				});
+			}
+
+			function doMove (obj, attr, dir, target, endFn) {
+				dir = parseInt(getStyle(obj, attr)) > target ? -dir : dir;//当前位置比目标点小的话 dir为正，否则为负
+				clearInterval(obj.timer);
+				obj.timer = setInterval(function(){
+					var speed = parseInt(getStyle(obj, attr)) + dir;
+					
+					if(speed > target && dir > 0  || speed < target && dir < 0) {
+						speed = target;
+					}
+					obj.style[attr] = speed + "px";
+					if(speed == target) {
+						clearInterval(obj.timer);
+						endFn && endFn();
+					}
+				},30);
+			}
+		}
+		function getStyle( obj, attr ){
+			return obj.currentStyle ? obj.currentStyle[attr] : getComputedStyle(obj)[attr];
+		}
+	</script>
+</body>
+</html>
