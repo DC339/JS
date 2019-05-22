@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>点赞效果</title>
+	<style>
+		ul { margin: 0;padding:0; }
+		li { list-style: none; }
+		#list { margin: 500px auto;width: 600px;height: 40px;position: relative;border: 1px solid #000; }
+		#div { width:0;height:40px;/*opacity: 0;*/position: absolute left:0;background:#3FF;/*z-index: -1000;*/}
+		
+		#box li {width: 20px;height:40px;line-height: 40px;position: absolute;bottom:0;text-align: center }
+	</style>
+	<script type="text/javascript" src="miaov.js"></script>
+</head>
+<body>
+	<script type="text/javascript">
+		window.onload = function () {
+			var oDiv = document.getElementById("div");
+			var oList = document.getElementById("list");
+			var oUl = document.getElementById("box");
+			var aLi = oUl.getElementsByTagName("li");
+			var str = "",onOff = true;
+			function init(){
+				for(let i = 0; i < 20; i++){
+					str += '<li style=left:'+ i * 30 +'px;opacity:1;filter:alpha(opacity=1)>+1</li>';
+				}
+				oUl.innerHTML = str;
+			}
+			init();
+			
+			var num=0;
+			oList.onclick = function () {
+				if(onOff){
+					ulClick();
+					onOff = false;
+				}
+			}
+			function ulClick() {
+				clearInterval(oUl.timer);
+				clearInterval(oUl.timer2);
+				oUl.timer = setInterval(function(){
+					
+					doMove( aLi[num], 'bottom', 20, 500);
+					
+					opacity(aLi[num], 0.08, 0 );
+					if(num >=aLi.length - 1){
+						clearInterval(oUl.timer);
+					}
+					
+					num++;
+					
+					
+					if(num === aLi.length) {
+						clearInterval(oUl.timer);
+					}
+				}, 40);
+				oUl.timer2 = setTimeout(function(){
+					doMove(oDiv, 'width',40, 600);
+					opacity(oDiv, 0.05, 0);
+				}, 40);
+			}
+
+			function opacity(obj, dir, target){
+				dir = parseInt(getStyle(obj, 'opacity'))<target ? dir : -dir;
+				clearInterval(obj.op);
+				
+				obj.op = setInterval(function(){
+					var speed = parseFloat(getStyle(obj,'opacity')) + dir;
+					if(speed > target&&dir>0||speed<target&&dir<0){
+						speed = target;
+					}
+					obj.style.opacity = speed;
+					onOff=true;
+
+					if(speed == target){
+						clearInterval(obj.op);
+					}
+
+				}, 30);
+
+			}
+		}
+		function getOpacity(obj){
+			return getComputedStyle(obj) ? getComputedStyle(obj)['opacity'] : obj.currentStyle['filter'];
+		}
+		
+	</script>
+	<div id="list">
+		<div id="div"></div>
+		<ul id="box">
+		
+		</ul>
+	</div>
+	
+</body>
+</html>
