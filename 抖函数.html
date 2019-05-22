@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		img { width: 180px;height: 180px;position: absolute;top:20px; }
+		#img1 { left: 100px; }
+		#img2 { left: 300px; }
+	</style>
+	<script type="text/javascript" src="miaov.js"></script>
+</head>
+<body>
+	<img id="img1" src="../img/1.png" alt="">
+	<img id="img2" src="../img/2.png" alt="">
+	<script type="text/javascript">
+		window.onload = function () {
+			var aImg = document.getElementsByTagName("img");
+			aImg[0].onOff = true;
+			aImg[1].onOff = true;
+			aImg[0].onclick = fnShake;
+			aImg[1].onclick = function () {
+				shake(this, 'left');
+			}
+			
+			function fnShake () {
+				
+				var that = this;
+
+				shake(that, 'left', function () {
+					shake(that, 'top');
+				});
+			}
+
+			function shake (obj, attr, endFn) {
+				var pos = parseInt(getStyle(obj, attr));
+				
+				var arr = [],num=0;
+				//获得抖动频率
+				for(let i = 20; i > 0; ){
+					arr.push(i, -i);
+					i -= 2;
+				}
+				arr.push(0);
+				if(obj.onOff){
+					clearInterval(obj.shake);
+					obj.shake = setInterval(function(){
+						obj.onOff = false;
+						obj.style[attr] = pos + arr[num] + 'px';
+						num++;
+						if(num === arr.length) {
+							obj.onOff = true;
+							clearInterval(obj.shake);
+							endFn && endFn();
+						}
+					}, 50);
+				}
+				
+			}
+			
+		}
+		
+
+	</script>
+</body>
+</html>
