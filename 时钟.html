@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		ul,li{margin: 0;padding: 0}
+		li { list-style:none; }
+		ul { width: 800px;height:150px;/*border:1px solid #000;*/margin:100px auto;position: relative;overflow:hidden; }
+		img{ width: 100px;height: 150px;vertical-align: top; }
+		ul li { width: 100px;height: 150px;position: absolute;top:0; }
+		ul li div { width: 100px;height: 150px;position: absolute;left:0;top:0; }
+	</style>
+	<script type="text/javascript" src="doMove.js"></script>
+</head>
+<body>
+	<script type="text/javascript">
+		window.onload = function () {
+			var oUl = document.getElementById("list");
+			var aLi = oUl.getElementsByTagName("li");
+			var aDiv = oUl.getElementsByTagName("div");
+			var oP = document.getElementById("time");
+			var aImg = document.getElementsByTagName("img");
+			//获取初始化时间
+			var t = getTime();
+			//初始化每个img的位置
+			for(let i = 0; i < aLi.length; i++) {
+				aLi[i].style.left = i * 100 + 'px';
+			}
+			//将每个时间对应上图片
+			for(let i = 0; i < aDiv.length; i++) {
+				aDiv[i].getElementsByTagName("img")[0].src = "img/"+ t.charAt(i) +".jpg";
+			}
+			//点的闪烁
+			setInterval(function(){
+				aLi[2].getElementsByTagName("img")[0].src = 'img/colon.jpg';
+				aLi[5].getElementsByTagName("img")[0].src = 'img/colon.jpg';
+				//延时闪烁
+				setTimeout(function(){
+					aLi[2].getElementsByTagName("img")[0].src = 'img/colon1.jpg';
+					aLi[5].getElementsByTagName("img")[0].src = 'img/colon1.jpg';
+				},500);
+				//调用autoPlay
+				autoPlay();
+			}, 1000);
+
+			//时间图片变换
+			function autoPlay () {
+				//获取当前时间
+				var str = getTime();
+				for(let i = 0; i < aDiv.length; i++){
+					if(t[i] !== str[i]){
+						slide(i, str);
+					}
+				}
+				//将时间更小为改变后的时间，用作后面的对比
+				t = str;
+			}
+			function slide(n, str){
+				//获取当前变化的位置的图片
+				var oImg = aDiv[n].getElementsByTagName("img");
+				//把下面隐藏的图片地址改为现在时间锁对应的图片
+				oImg[1].src = 'img/'+ str[n] +'.jpg';
+				//显示更新后的图片
+				doMove(aDiv[n], 'top', 10, -150, function(){
+					//显示出来后，把上面的图片也改为现在的时间，并把div拉下去(书剑拉下来，所以看不出来)
+					oImg[0].src = 'img/'+ str[n] +'.jpg';
+					aDiv[n].style.top = '0px';
+				});
+			}
+		}
+		
+		function getTime(){
+			var date = new Date();
+			var h = date.getHours();
+			var m = date.getMinutes();
+			var s = date.getSeconds();
+
+			var str = toTwo(h) + toTwo(m) + toTwo(s);
+			return str;
+		}
+		function toTwo (n) {
+			return n < 10 ? '0' + n : '' + n;
+		}
+
+	</script>
+	<!-- <p id="time"></p> -->
+	<ul id="list">
+		<li><div><img src="img/0.JPG"><img src="img/0.jpg" alt=""></div></li>
+		<li><div><img src="img/0.JPG"><img src="img/0.jpg" alt=""></div></li>
+		<li><img src="img/colon.JPG"></li>
+		<li><div><img src="img/0.JPG"><img src="img/0.jpg" alt=""></div></li>
+		<li><div><img src="img/0.JPG"><img src="img/0.jpg" alt=""></div></li>
+		<li><img src="img/colon.JPG"></li>
+		<li><div><img src="img/0.JPG"><img src="img/0.jpg" alt=""></div></li>
+		<li><div><img src="img/0.JPG"><img src="img/0.jpg" alt=""></div></li>
+	</ul>
+	
+</body>
+</html>
