@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		ul,li,h3,p,dl,dt,dd,img { margin:0;padding:0;list-style: none }
+		#box { width: 1000px;height:450px;box-shadow: 0 0 15px rgba(0,0,0,.3);margin:100px auto;position:relative; }
+		#box h3 { width: 1000px;height:40px;line-height:40px;border-bottom: 1px solid #000; }
+		#box ul { width:1000px;height: 430px;/*position:absolute;left:0;bottom:0;*/ }
+		ul li { width: 300px;height:400px;position:absolute;left:0;bottom:5px; } 
+		ul img { width: 300px;height: 260px; }
+		li div,li p,li span { width: 300px;height:30px;line-height: 30px; }
+		li div,li p { text-align:center; }
+		button { margin-left:10px; }
+		li span { display: inline-block;position: absolute;left:0;bottom:0;text-indent: 10px }
+		/*dl { width: 1000px; }*/
+		dl dt { width: 1000px;height: 60px;line-height:60px;background-color: pink; }
+		dl dd { background-color: pink;margin-top:8px;height: 80px;line-height:80px;  }
+		dl dt span,dd span { display: inline-block;width: 180px;line-height:60px;margin-right: 200px;text-align: center }
+		dl img { width: 120px;height: 60px;vertical-align: middle }
+		#total { display: none }
+	</style>
+	<script type="text/javascript" src="doMove.js"></script>
+</head>
+<body>
+	<script type="text/javascript">
+		window.onload = function () {
+			var oUl = document.querySelector('.ul1');
+			var aLi = oUl.getElementsByTagName("li");
+			var aP = oUl.getElementsByTagName("p");
+			var aInp = oUl.getElementsByTagName("input");
+			var aBtn = oUl.getElementsByTagName("button");
+			var oDl = document.querySelector("dl");
+			var oDt = oDl.getElementsByTagName("dt");
+			var aDd = oDl.getElementsByTagName("dd");
+			var tDiv = document.getElementById("total");
+			var total = tDiv.getElementsByTagName("span")[0];
+
+			var tNow = null,iNow = null,count=0;
+
+			//将li的left位置设置好
+			for(let i=0;i<aLi.length;i++){
+					aLi[i].style.left = 330 * i+16 + 'px';
+					aLi[i].style.opacity = 1;
+					aLi[i].onOff = true;
+				}
+			//点击确定，显示倒计时
+			for(let i = 0; i < aBtn.length; i++){
+				aBtn[i].index = i;
+ 				aBtn[i].onclick = function (){
+ 					aLi[this.index].onOff = true;
+ 					var num = aBtn[i].index;
+ 					clearInterval(aBtn.timer);
+					tNew = new Date(aInp[this.index].value);
+					// tNew = new Date('may 27, 2019 09:15:30');
+					// console.log(tNew);
+					aBtn.timer = setInterval(function(){
+						tNow = new Date();
+						var t = Math.floor((tNew - tNow) / 1000);
+						if(t >= 0){
+							t = Math.floor(t/86400) + '天' + Math.floor(t%86400/3600) + '时' +
+							Math.floor(t % 86400 %3600/60) + '分' + t%60 + '秒';
+							aP[num].innerHTML = "剩余"+t;
+							
+
+						}
+						else{ 
+							clearInterval(aBtn.timer);
+							shake(aLi[num], 'left', function(){
+								doMove(aLi[num], 'bottom', 20, -400);
+								opacity(aLi[num], 0.05, 0, function(){
+									//创造一个dd
+									addList();
+									//填入商品名称
+									aDd[num].getElementsByTagName("span")[0].innerHTML = aLi[num].getElementsByTagName("a")[0].innerHTML;
+									aDd[num].getElementsByTagName("span")[1].innerHTML = aLi[num].getElementsByTagName("strong")[0].innerHTML;
+									oDl.getElementsByTagName("img")[num].src = "img/00.jpg";
+									count += parseInt(aLi[num].getElementsByTagName("strong")[0].innerHTML);
+									tDiv.style.display = "block";
+									total.innerHTML = count;
+								});
+							});
+							
+						}
+					}, 1000);	
+			}
+
+			
+		}
+		
+		function addList(){
+			var str = "";
+			var oDd = document.createElement("dd");
+			str += "<span></span><span></span><img src=''>";
+			oDd.innerHTML = str;
+			oDl.appendChild(oDd);
+		}
+	}
+		
+
+	</script>
+	<div id="box">
+		<h3>限购时间</h3>
+		<ul class="ul1">
+			<li>
+				<div><input type="text" /><button>确定</button></div>
+				<p>剩余0天0时0分0秒</p>
+				<div><img src="img/00.jpg"/><a>标题一</a></div>
+				<span>抢购价：￥<strong>111</strong></span>
+			</li>
+			<li>
+				<div><input type="text" /><button>确定</button></div>
+				<p>剩余0天0时0分0秒</p>
+				<div><img src="img/00.jpg"/><a>标题二</a></div>
+				<span>抢购价：￥<strong>145</strong></span>
+			</li>
+			<li>
+				<div><input type="text" /><button>确定</button></div>
+				<p>剩余0天0时0分0秒</p>
+				<div><img src="img/00.jpg"/><a>标题三</a></div>
+				<span>抢购价：￥<strong>575</strong></span>
+			</li>
+		</ul>
+		<dl>
+			<dt><span>商品名称</span><span>价钱</span></dt>
+			<!-- <dd><span></span><span></span><img src=""></dd> -->
+			
+		</dl>
+		<div id="total">总价：<span></span></div>
+	</div>
+	
+</body>
+</html>
