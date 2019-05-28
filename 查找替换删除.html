@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		body { background-color: #ccc; }
+		ul,li { padding: 0;margin:0; }
+		li { list-style: none; }
+		span { background-color: yellow; }
+		#box { width: 520px;height: 300px; margin:100px auto;}
+		#dv{ width: 520px;height: 200px;border: 10px solid #ccc;background-color: #fff;box-sizing: border-box;padding:10px;position: relative; }
+		#dv ul { width: 60px;height: 120px;position: absolute;left: 520px;top:-10px; }
+		#dv ul li { width: 60px;height: 40px;text-align: center;line-height: 40px;color:#fff;background-color: rgba(0,0,0,.4);cursor:pointer;/*border-bottom: 1px solid #fff;*/ }
+		
+		#dv .sp { display: none; }
+		#dv ul li.sp:hover { background-color: red; }
+		.ipt { width: 480px;height: 100px;border: 10px solid red;background-color: pink; padding:10px;margin-top: 10px;position: relative;/*display: none*/ }
+		.ul1 { border-bottom: 2px solid red; }
+		.ul1 li { width: 60px;height: 30px;line-height:30px;text-align: center;float: left; }
+		.ul2 li { height: 60px;line-height: 60px }
+		.ipt a { display:inline-block;font-weight:bold;position: absolute;right:5px;top:2px; }
+		input { width : 200px; }
+		.hide { display: none }
+		.active { background-color: red; }
+		.clearfix:after { content: ".";height: 0;display: block;visibility: hidden;clear: both; }
+	</style>
+</head>
+<body>
+	<div id="box">
+		<div id="dv">
+			<p></p>
+			<ul>
+				<li>展开</li><li class="sp">查找</li><li class="sp">替换</li>
+			</ul>
+		</div>
+		<div class="ipt hide">
+			<ul class="ul1 clearfix">
+				<li class="active">查找</li>
+				<li>替换</li>
+			</ul>
+			<a>X</a>
+			<ul class="ul2">
+				<li><input type="text" /><button>查找</button></li>
+				<li class="hide">
+					<input type="text" /><input type="text" /><button>替换</button>
+				</li>
+			</ul>
+		</div>
+	</div>
+	
+	
+	<script type="text/javascript">
+		window.onload = function () {
+			var oText = document.getElementById("dv");
+			var oP = document.getElementsByTagName("p")[0];
+			var oList = oText.getElementsByTagName("li");
+			var oDiv = document.querySelector(".ipt");
+			var oA = oDiv.getElementsByTagName("a")[0];
+			var oUl1 = oDiv.querySelector(".ul1");
+			var oUl2 = oDiv.querySelector(".ul2");
+			var aLi1 = oUl1.getElementsByTagName("li");
+			var aLi2 = oUl2.getElementsByTagName("li");
+			var aBtn = oDiv.getElementsByTagName("button");
+			var ipt1 = aLi2[0].getElementsByTagName("input")[0];
+			// console.log(ipt1);
+			var ipt2 = aLi2[1].getElementsByTagName("input")[0];
+			var ipt3 = aLi2[1].getElementsByTagName("input")[1];
+			var onOff = true;
+
+			var str = "据台湾地区《经济日报》报道，高雄市政府证实，鸿海确定投资高雄，鸿海将在高雄投资兴建一座智能工厂，生产服务器等相关产品。高雄市政府经发局表示，这次鸿海在2个月内即完成选地购地，是市府团队积极招商的成果。据台湾地区《经济日报》报道，高雄市政府证实，鸿海确定投资高雄，鸿海将在高雄投资兴建一座智能工厂，生产服务器等相关产品。"
+			oP.innerHTML = str;
+			//当点击“展开”时，显示下拉菜单
+			oList[0].onclick = function () {
+				if(onOff){
+					show();
+					
+				}else {
+					hide();
+				}
+				
+				onOff = !onOff;
+			}
+			// 当点击"替换"和“查找”的时候展开对应的查找和替换菜单
+			for(let i = 1; i < oList.length; i++) {
+				oList[i].index = i-1;
+				oList[i].onclick = function () {
+					hide();
+					onOff = true;
+					tab(this.index);
+				}
+			}
+			//当点击X时，oDiv隐藏
+			oA.onclick = function () {
+				oDiv.style.display = "none";
+			}
+			//当点击oDiv中相应标签时，设置不同的交互效果
+			for(let i = 0; i < aLi1.length; i++) {
+				aLi1[i].index = i;
+				aLi1[i].onclick = function () {
+					for(let i = 0; i < aLi1.length;i++){
+						aLi1[i].className = "";
+						aLi2[i].style.display = "none";
+					}
+					aLi1[this.index].className = "active";
+					aLi2[this.index].style.display = "block";
+				}
+			}
+			//设置查找事件
+			aBtn[0].onclick = function () {
+				var val = ipt1.value;
+				oP.innerHTML = "<span style='background:none'>"+ str +"</span>";
+				ipt1.value = "";
+				if(!val) {
+					alert("请输入查找内容");
+					return;
+				}
+				if(str.indexOf(val) != -1){
+					oP.innerHTML = oP.innerHTML.split(val).join("<span>"+ val +"</span>");
+				}else {
+
+            	alert("没找到" + val );
+
+        		}
+			}
+			//设置查找事件
+			aBtn[1].onclick = function () {
+				var val = ipt2.value;
+				var nval = ipt3.value;
+				ipt2.value = "";
+				ipt3.value = "";
+				if(!val && !nval) return;
+				if(!val && nval) {
+					alert("请输入需要被替换的文字");
+					return;
+				}
+				if(val && !nval) {
+					if(str.indexOf(val) != -1) {
+						alert("确定要删除"+ val +"吗?");
+						oP.innerHTML = oP.innerHTML.split(val).join(nval);
+					}else{
+						alert("没有找到" + val);
+					}
+					
+				}
+				if(val && nval) {
+					oP.innerHTML = oP.innerHTML.split(val).join("<span>" + nval + "</span>")
+				}
+
+			}
+
+
+			function tab(n) {
+				for( let i = 0; i < aLi1.length; i++) {
+					aLi1[i].className = "";
+					aLi2[i].style.display = "none";
+				}
+				oDiv.style.display = "block";
+				aLi1[n].className = "active";
+				aLi2[n].style.display = "block";
+			}
+
+			function show(){
+				for(let i = 1; i < oList.length; i++){
+					oList[i].style.display = "block";
+				}
+			}
+			function hide(){
+				for(let i = 1; i < oList.length; i++){
+					oList[i].style.display = "none";
+				}
+			}
+
+		}
+	</script>	
+</body>
+</html>
