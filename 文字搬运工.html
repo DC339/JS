@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		/*body { background-color: #ccc; }*/
+		ul,li,p,input { padding: 0;margin:0; }
+		li { list-style: none;width: 8px;height: 10px;background-color: rgba(230, 152, 24, .6);float:left;margin-right: 2px; }
+		#box { width: 730px;height: 200px;margin: 100px auto;position: relative;border: 10px solid #ccc;padding:10px; }
+		.lis { width:100px;height:40px;line-height:40px; }
+		.middle { width:100px;height:60px;position: absolute;left: 320px;top:10px;text-align: center }
+		.middle span { display: block;width:100px;height: 40px;line-height: 40px;background-color: orange;color:#fff;cursor: pointer }
+		.middle p { line-height: 40px;display:none; }
+		.middle ul { margin-left:10px;margin-top:10px;opacity: 1;}
+		textarea,div#text { width: 280px;height: 180px;border: 1px dotted #000;outline: none;padding:10px;font-size: 14px;font-family: "微软雅黑" }
+		div#text { background-color: pink;position: absolute;left:440px;top:10px; }
+		.clearfix:after { content: ".";height:0;display: block;visibility: hidden;clear: both; }
+		
+		.active { background-color: red; }
+	</style>
+	<script type="text/javascript" src="doMove.js"></script>
+</head>
+<body>
+	<div id="box">
+		<textarea></textarea>
+		<div class="middle">
+			<span>把文字右移</span>
+			<p class="hide">0 / 0</p>
+			<div class="lis">
+				<ul class="clearfix">
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+				</ul>
+			</div>
+		</div>
+		<div id="text"></div>
+
+	</div>
+	
+	
+	<script type="text/javascript">
+		window.onload = function () {
+			var oBox = document.getElementById("box");
+			var oInp = oBox.getElementsByTagName("textarea")[0];
+			
+			var oSpan = oBox.getElementsByTagName("span")[0];
+			var oP = oBox.getElementsByTagName("p")[0];
+			var oUl = oBox.getElementsByTagName("ul")[0];
+			var aLis = oUl.getElementsByTagName("li");
+			var oText = document.getElementById("text");
+
+			var num = 0,len = 0,count=0,timer = null;
+			var str = "s是一个字符串，the c is a cell array，c的元素全是字符串，比如：s=‘hello’，c={'hello','matlab';'HELLO','matlab'}";
+			oInp.innerHTML = str;
+			//点击span,右移文字
+			oSpan.onclick = function () {
+				//每点击一次后，将右侧的字符清空
+				oText.innerHTML = "";
+				// 统计左侧文本框总长度
+				len = oInp.value.length;
+				oP.style.display = "block";
+				if(len){
+					clearInterval(timer);
+
+					timer = setInterval(function(){
+						//显示移动的字符数 num / len;
+						num++;
+						oP.innerHTML = num + ' / ' + len;
+						//从字符串中截取1个字符放到oText中,textare更新为剩下的字符串
+						oText.innerHTML += oInp.value.slice(0,1);
+						oInp.value = oInp.value.slice(1);
+						// 进度条的高亮显示
+						for(let i = 0; i < aLis.length; i++) {
+							aLis[i].className = "";
+						}
+						count = num%8;
+						aLis[count].className = "active"; 
+						// 如果所有字符都搬移到右边则结束定时器
+						if(num == len) {
+							// 置零
+							num = 0;
+							len = 0;
+							clearInterval(timer);
+							
+							opacity(oUl, 0.2, 0);
+							
+						}
+					}, 40)
+				}
+
+				
+			}
+		}
+	</script>	
+</body>
+</html>
