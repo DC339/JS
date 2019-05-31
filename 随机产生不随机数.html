@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script type="text/javascript">
+		//随机产生100个从0~1000之间不重复的整数
+		var arr =[];
+		for(let i = 0; i < 100; i++) {
+			arr.push(Math.floor(Math.random()*1000));
+
+		}
+		//去重
+		for(let i = 0; i < arr.length; i++) {
+			for( let j = i + 1; j < arr.length;j++ ) {
+				if(arr[i] == arr[j]){
+					arr[j] = Math.floor(Math.random()*1000);
+					j--;
+				}
+			}
+		}
+		console.log(arr);
+	</script>
+</body>
+</html>
