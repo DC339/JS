@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		div,ul,li { padding:0;margin: 0 }
+		li { list-style: none }
+		#box{ width: 410px;height: 510px; margin: 100px auto;padding:10px;border:1px solid #000;position: relative;/*text-align: center*/ }
+		#ul1,#ul2 { width: 200px;height: 480px;position: absolute;top:10px;}
+		#ul1 { left: 10px; }
+		#ul2 { left: 220px; }
+		li { width: 200px;height: 120px;margin-bottom: 10px;overflow: hidden;position: relative; }
+		div { width: 200px;height: 120px;position: absolute; }
+		img { width: 200px;height: 120px;vertical-align: top; }
+	</style>
+	<script type="text/javascript" src="doMove.js"></script>
+</head>
+<body>
+	<div id="box">
+		<ul id="ul1">
+			<li><div><img src="img/11.jpg"><img src="img/12.jpg"></div></li>
+			<li><div><img src="img/21.jpg"><img src="img/22.jpg"></div></li>
+			<li><div><img src="img/31.jpg"><img src="img/32.jpg"></div></li>
+			<li><div><img src="img/41.jpg"><img src="img/42.jpg"></div></li>
+		</ul>
+		<ul id="ul2">
+			<li><div><img src="img/51.jpg"><img src="img/52.jpg"></div></li>
+			<li><div><img src="img/61.jpg"><img src="img/62.jpg"></div></li>
+			<li><div><img src="img/71.jpg"><img src="img/72.jpg"></div></li>
+			<li><div><img src="img/81.jpg"><img src="img/82.jpg"></div></li>
+		</ul>
+	</div>
+	<script type="text/javascript">
+		window.onload = function () {
+			var oDiv = document.getElementById("box");
+			var aDiv = oDiv.getElementsByTagName("div");
+			var aLis = oDiv.getElementsByTagName("li");
+			var len = aLis.length;
+			var timer = null,num=0,onOff = true; //设置开关
+
+			// 清除定时器
+			clearInterval(timer);
+			timer = setInterval(function(){
+				// 产生0~lis个数的随机数
+				num = Math.floor(Math.random()*len);
+				if(onOff){
+					doMove(aDiv[num], 'top', 20, -120);
+				}else{
+					doMove(aDiv[num], 'top', 20, 0);
+				}
+				onOff = !onOff;
+			},500)
+		}
+	</script>
+</body>
+</html>
