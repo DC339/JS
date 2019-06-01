@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		div,p,h2 { margin:0;padding:0; }
+		#box { width: 600px;height: 800px;margin: 0 auto;position: relative; }
+		#text { width: 600px;height: 120px;line-height:40px;margin: 0 auto;text-align: center; }
+		#area { width: 600px;height: 400px;border: 1px solid #000;position: relative;overflow: hidden }
+		#side { width: 120px;height: 80px;position: absolute;left:-122px;top:120px;border: 1px solid #000;border-right: 0;background-color: yellow; }
+		#side span { display: block;line-height: 40px;text-align: center }
+		div.qq { width:24px;height: 24px;position: absolute;top:0; }
+		img { width: 24px;height: 24px }
+	</style>
+	<script type="text/javascript" src="Move.js"></script>
+</head>
+<body>
+	<div id="box">
+		<div id="text">
+			<h2>你的鼠标有多快？</h2>
+			<p>游戏说明：点击“开始游戏”，随机掉下QQ表情，点中它，千万别让它掉下去！！</p>
+			<input type="button" value="开始游戏" />
+		</div>
+		<div id="area">
+			
+			<!-- <div class="qq"><img src="" alt=""></div> -->
+		</div>
+		<div id="side">
+			<span>得分：0</span>
+			<span>失分：0</span>
+		</div>
+		
+		
+	</div>
+	<script type="text/javascript">
+		window.onload = function() {
+			var oText = document.getElementById("text");
+			var oBtn = oText.getElementsByTagName("input")[0];
+			var oArea = document.getElementById("area");
+			// var oQQ = oArea.getElementsByTagName("div")[0];
+			// var oImg = oQQ.getElementsByTagName("img")[0];
+			var aSp = document.getElementsByTagName("span");
+			// console.log(oImg);
+			var arrUrl = ['img/1.png', 'img/2.png', 'img/3.png', 'img/4.png', 'img/5.png', 'img/6.png', 'img/7.png', 'img/8.png', 'img/9.png', 'img/10.png', 'img/11.png'];
+			//获取位置范围
+			
+			var num = 5,count=0, ncount=0,targ = 3;
+			oBtn.onOff = true;
+			oBtn.onclick = function(){
+				if(oBtn.onOff){
+					oBtn.onOff = false;
+					count = 0; ncount =0;
+					startGame();
+				}
+			}
+			//游戏函数
+			function startGame(){
+				var oQQ = document.createElement('div');
+				var index = randomNum(11);
+				oQQ.className = "qq";
+				oQQ.innerHTML = '<img src="'+arrUrl[index]+'" alt="" />'
+				oQQ.onOff = true;
+				oArea.onOff = true;
+				oArea.appendChild(oQQ);
+				oQQ.style.left = randomNum(576) + 'px';
+
+				oQQ.addEventListener('click', move());
+				doMove(oQQ, 'top', num, 364, function(){
+					ncount++;score();
+					oQQ.parentNode.removeChild(oQQ);
+					shake(oArea, 'top',function(){
+						if(ncount>=targ){
+							oBtn.onOff = true;
+							alert("游戏结束！");
+							count = 0; ncount = 0;score();
+						}else{
+							oBtn.onOff = true;
+							startGame();
+						}
+					});
+				});
+
+				function move(){
+					// alert(111);
+					return function(ev){
+						var target = ev.target;
+						console.log(target);
+						if(target.parentNode.className == 'qq' || target.nodeName == 'IMG'){
+							shake(oQQ, 'left',function(){
+								console.log(oQQ.parentNode);
+								oQQ.parentNode.removeChild(oQQ);
+								count++;
+								num++;
+								score();
+								oQQ.removeEventListener('click', move());
+								startGame();
+							});
+						}
+					}
+				}
+			}
+
+			
+			
+			
+			//刷新分数
+			function score(){
+				aSp[0].innerHTML = "";
+				aSp[1].innerHTML = "";
+				aSp[0].innerHTML = "得分：" + count;
+				aSp[1].innerHTML = "失分：" + ncount;
+			}
+			function randomNum(max){
+				return Math.round(Math.random()*max - 0.5);
+			}
+		}
+	</script>
+</body>
+</html>
