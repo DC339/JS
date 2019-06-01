@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		div,ul,li,p { padding:0;margin: 0 }
+		li { list-style: none }
+		#box{ width: 420px;height: 320px; margin: 100px auto;padding:10px;border:1px solid #000;position: relative;/*text-align: center*/ }
+		p,textarea { width: 400px;height: 100px;border: 1px solid #000;margin-bottom:10px;padding: 10px }
+		select { width: 80px;margin-bottom: 10px; }
+		span { display: inline-block;width: 20px;height: 40px;padding-top:20px; }
+		
+	</style>
+</head>
+<body>
+	<div id="box">
+		<p></p>
+		<select>
+			<option>西瓜</option>
+			<option>太阳</option>
+			<option>浪花</option>
+		</select>
+		<textarea id=""></textarea>
+		<input type="button" value="确定" />
+	</div>
+	<script type="text/javascript">
+		window.onload = function () {
+			var oDiv = document.getElementById("box");
+			var oP = oDiv.getElementsByTagName("p")[0];
+			var oSelect = oDiv.getElementsByTagName("select")[0];
+			var aOpt = oSelect.getElementsByTagName("option");
+			var oText = oDiv.getElementsByTagName("textarea")[0];
+			var oBtn = oDiv.getElementsByTagName("input")[0];
+			var aSpan = oDiv.getElementsByTagName("span");
+
+			var arrUrl = ['img/xg.jpg', 'img/cz.jpg', 'img/lh.jpg'];
+			var arrColor = ['#ccc', 'red', 'pink'];
+
+			oBtn.onclick = function () {
+				var count = oSelect.selectedIndex;
+				var val = oText.value;
+				var arr = val.split("");
+				for(var i = 0; i < arr.length; i++){
+					oP.innerHTML += '<span style="background:url('+arrUrl[count]+') no-repeat;background-size:20px 20px">' + arr[i] + '</span>';
+				}
+				
+
+			}
+			
+		}
+	</script>
+</body>
+</html>
