@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		div,ul,li,p,img { padding:0;margin: 0 }
+		li { list-style: none }
+		#box{ width: 900px;height: 400px; margin: 100px auto;padding:10px;border:1px solid #000;background-color: #ccc;}
+		ul { margin-top: 20px }
+		ul li { width: 200px;height: 140px;border: 10px solid #fff;float:left;margin-right: 5px; }
+		img { width: 200px;height: 100px; }
+		p { width: 200px;height:40px;line-height:40px;text-align:center;background-color: #ccc; }
+		.clearfix:after { content:".";display:block;height:0;visibility: hidden;clear: both; }
+	</style>
+</head>
+<body>
+	<div id="box">
+		<button>排序(从大到小)</button><button>随机打乱</button>
+		<ul class="clearfix">
+
+		</ul>
+
+	</div>
+	<script type="text/javascript">
+		window.onload = function () {
+			var oBox = document.getElementById("box");
+			var oUl = document.getElementsByTagName("ul")[0];
+			var aLi = oUl.getElementsByTagName("li");
+			var aImg = oUl.getElementsByTagName("img");
+			var aP = oUl.getElementsByTagName("p");
+			var aBtn = oBox.getElementsByTagName("button");
+
+			//渲染p标签的内容
+			var picArr = [{"url":"img/timg.jpg","name":"水果"},{"url":"img/00.jpg","name":"香蕉"},{"url":"img/03.jpg","name":"橙子"},{"url":"img/cz.jpg","name":"西瓜"},{"url":"img/lh.jpg","name":"荔枝"},{"url":"img/xg.jpg","name":"苹果"},{"url":"img/00.jpg","name":"龙眼"},{"url":"img/timg.jpg","name":"李子"}];
+			var arr = [0, 1, 2, 3, 4, 5, 6, 7];
+			change(arr);
+
+			//随机打乱
+			aBtn[1].onclick = function () {
+				// 产生索引值,arr为随机产生的索引值，作为p标签和img的src填内容的索引
+				sortArr(arr);
+				//在第0个到第8个li中填入相应的p标签的内容和img的src值，索引值为arr[i];
+				change(arr);
+			}
+			//排序
+			aBtn[0].onclick = function () {
+				// 对现在的数值顺序进行排序（从大到小）
+				arr.sort(function(a,b){
+					return b-a;
+				});
+				// 往li中填入按顺序排序的序号、水果名字，以及对应的图片的src
+				change(arr);
+			}
+			//改变p和img里面的内容
+			function change(arr){
+				oUl.innerHTML = "";
+
+				for ( let i = 0; i < picArr.length; i++) {
+					oUl.innerHTML += '<li><img src="'+ picArr[arr[i]].url +'" /><p>' + (arr[i]+1) + "-" + picArr[arr[i]].name + '</p></li>';
+				}
+			}
+
+			function sortArr(obj){
+				return obj.sort(function(a,b){
+					return Math.floor(Math.random()*8 - 4);
+				});
+			}
+		}
+	</script>
+</body>
+</html>
