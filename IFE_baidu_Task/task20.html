@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		textarea{
+			width: 300px;
+			height: 100px;
+		}
+		.box {
+			position: relative;
+			height: 120px;
+			margin-top: 5px;
+			}
+		.box div {
+			position: absolute;
+			top: 0;
+		  	display: inline-block;
+		  	width:60px;
+		  	height:40px;
+		  	line-height: 40px;
+		  	text-align: center;
+		  	background-color: pink;
+		  	margin-right: 5px;
+		}
+		span { background-color: yellow; }
+	</style>
+</head>
+<body>
+	<textarea placeholder="请输入不同格式字符并用分隔符分开"></textarea>
+	<div class="btns">
+		<input type="button" id="push", value="插入" />
+		<input type="button" id="search", value="查询" />
+		<input type="text" id="text" />
+	</div>
+
+	<div class="box">
+		<!-- <div style="left: 0px;"></div>
+		<div style="left: 70px;"></div> -->
+
+	</div>
+	<script type="text/javascript">
+		window.onload = function () {
+			var oText = document.getElementsByTagName('textarea')[0];
+			var oBtn = document.querySelector('.btns');
+			var aInputs = oBtn.getElementsByTagName('input');
+			var oBox = document.querySelector('.box');
+			var aDiv = oBox.getElementsByTagName("div");
+
+			var arr = [];
+
+			
+			//点击插入按钮，进行相应的增添删除操作
+			addEvent(aInputs[0], 'click', function(){
+				var val = oText.value.trim();
+				//按照非字母数字中文的其他符号分割字符串
+				var reg = new RegExp('[^A-Za-z0-9\u4e00-\u9fa5]+', 'g');
+				var arrWord = val.split(reg);
+				// console.log(arrWord);
+				// 将分割后的字符串拼接在arr后面
+				arr = arr.concat(arrWord);
+				paint();
+			});
+
+			addEvent(aInputs[1], 'click', function(){
+				find();
+			});
+
+			// 根据arr列表渲染小方块
+			function paint(){
+				oBox.innerHTML = "";
+				for(var i = 0; i < arr.length; i++){
+					oBox.innerHTML += "<div style='left:"+i*70+"px'>"+arr[i]+"</div>";
+				}
+				del();
+			}
+			//查找arr中的元素是否等于content
+			function find(){
+				oBox.innerHTML = "";
+				for(let i = 0;i < arr.length; i++){
+					var content = aInputs[2].value;
+					if(arr[i].indexOf(content) != -1){
+						arr[i] = arr[i].split(content).join('<span>'+content+'</span>');
+					}
+					oBox.innerHTML += "<div style='left:"+i*70+"px'>"+arr[i]+"</div>";
+					
+				}
+				del();
+				
+			}
+
+			//点击小方块添加删除事件
+			function del(){
+				for(let i = 0; i < aDiv.length; i++){
+					aDiv[i].index = i;
+					addEvent(aDiv[i], 'click', function (){
+						delDiv(this.index);
+					});
+
+				}
+			}
+			
+
+			//删除div
+			function delDiv(n){
+				arr.splice(n, 1);
+				paint();
+			}
+
+			//添加事件函数
+			function addEvent(ele, event, handler){
+				if(ele.addEventListener) {
+					ele.addEventListener(event, handler, false);
+				}else if (ele.attachEvent) {
+						ele.attachEvent("on" + event, handler);
+				}else {
+					ele["on" + event] = handler;
+				}
+			}
+		}
+		
+	</script>
+</body>
+</html>
