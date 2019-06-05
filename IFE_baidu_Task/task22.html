@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		.root { width: 1000px;height: 300px;border: 1px solid #000;display: flex;justify-content: space-between;padding:20px; }
+		.child1 { width: 450px;height: 260px;border: 1px solid red;display: flex;justify-content: space-between;padding:20px; }
+		.child2 { width: 170px;height: 220px;border: 1px solid #000;display: flex;justify-content: space-between;padding:20px; }
+		.child3 { width: 35px;height: 180px;border: 1px solid blue;display: flex;justify-content: space-between;padding:20px; }
+		.btns { width: 1000px;height: 60px;line-height: 60px;text-align: center }
+		input { width: 100px;line-height: 40px;font-size: 18px;margin-right: 10px }
+	</style>
+</head>
+<body>
+	<script type="text/javascript">
+		window.onload = function(){
+			var aDiv = document.getElementsByTagName("div");
+			var oRoot = document.querySelector(".root");
+			var oBtns = document.querySelector('.btns');
+			var aBtn = oBtns.getElementsByTagName("input");
+			var divList = [],timer = null;
+			
+			
+			//按下不同的按钮，绑定相应遍历事件
+			for(let i = 0; i < aBtn.length; i++){
+				aBtn[i].index = i;
+				
+				addEvent(aBtn[i], 'click', function(){
+					//初始化
+					reset();
+					//不同的遍历方式
+					operate(aBtn[this.index]);
+					//颜色相应改变
+					changeColor();
+				});
+				
+			}
+			function operate(obj){
+				switch( obj.id ){
+					case "preOrder":
+						preOrder(oRoot);
+						break;
+					case "inOrder":
+						inOrder(oRoot);
+						break;
+					case "postOrder":
+						postOrder(oRoot);
+				}
+			}
+			//前序遍历
+			function preOrder(node){
+				if(!(node == null)){
+					divList.push(node);
+					preOrder(node.firstElementChild);
+					preOrder(node.lastElementChild);
+				}
+			}
+			//中序遍历
+			function inOrder(node){
+				if(!(node == null)){
+					inOrder(node.firstElementChild);
+					divList.push(node);
+					inOrder(node.lastElementChild);
+				}
+			}
+			//后序遍历
+			function postOrder(node){
+				if(!(node == null)){
+					postOrder(node.firstElementChild);
+					postOrder(node.lastElementChild);
+					divList.push(node);
+				}
+			}
+			//改变颜色函数
+			function changeColor(){
+				var i = 0;
+				divList[i].style.backgroundColor = "pink";
+				clearInterval(timer);
+				timer = setInterval(function(){
+					i++;
+					if(i < divList.length){
+						divList[i-1].style.backgroundColor = "#fff";
+						divList[i].style.backgroundColor = "pink";
+					}else{
+						clearInterval(timer);
+						divList[divList.length - 1].style.backgroundColor = "#fff";
+					}
+					
+				},500)
+			}
+			//初始化函数
+			function reset(){
+				divList = [];
+				clearInterval(timer);
+				for(let i = 0; i < aDiv.length; i++){
+					aDiv[i].style.backgroundColor = "#fff";
+				}
+			}
+			//事件兼容函数
+			function addEvent(obj, event, Fn){
+				if(obj.addEventListener){
+					return obj.addEventListener(event,Fn, false);
+				}else if(obj.attachEvent){
+					return obj.attachEvent('on'+event, Fn);
+				}else{
+					return obj['on' + event] = Fn;
+				}
+			}
+			
+		}
+	</script>
+	<div class="root">
+		<div class="child1">
+			<div class="child2">
+				<div class="child3"></div>
+				<div class="child3"></div>
+			</div>
+			<div class="child2">
+				<div class="child3"></div>
+				<div class="child3"></div>
+			</div>
+		</div>
+		<div class="child1">
+			<div class="child2">
+				<div class="child3"></div>
+				<div class="child3"></div>
+			</div>
+			<div class="child2">
+				<div class="child3"></div>
+				<div class="child3"></div>
+			</div>
+		</div>
+
+	</div>
+	<div class="btns">
+		<input type="button" id="preOrder" value="前序遍历">
+		<input type="button" id="inOrder" value="中序遍历">
+		<input type="button" id="postOrder" value="后序遍历">
+	</div>
+</body>
+</html>
