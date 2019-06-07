@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		#div1 { width:100px;height:100px;background-color: red; position: absolute; }
+		#div2 { width:100px;height:100px;background-color: yellow; position: absolute;left: 100px}
+		#div3 { width:100px;height:100px;background-color: blue; position: absolute;left: 200px }
+	</style>
+</head>
+<body>
+	<script>
+		window.onload = function(){
+			//创建一个实例
+			var d1 = new Drag();
+			d1.init('div1', {});
+
+			var d2 = new Drag();
+			d2.init('div2', {
+				toDown : function(){
+					document.title = "hello"
+				}
+			});
+
+			var d3 = new Drag();
+			d3.init('div3', {
+				toDown: function(){
+					document.title = "您好"
+				},
+				toUp: function(){
+					document.title = "再见"
+				}
+			})
+			
+		};
+		// 创建构造函数
+		function Drag(){
+			this.obj = null;
+			this.disX = 0;
+			this.disY = 0;
+			this.setting = {
+				toDown : function(){},
+				toUp : function(){}
+			};
+		}
+		//构造函数的方法
+		Drag.prototype.init = function(id,opt){
+			var This = this;
+			this.obj = document.getElementById(id);
+			extend(this.setting, opt);
+
+			this.obj.onmousedown = function(ev){
+				
+				var ev = ev || window.event;
+				This.fnDown(ev);
+				This.setting.toDown();
+				document.onmousemove = function(ev){
+					var ev = ev || window.event;
+					This.fnMove(ev);
+				}
+				document.onmouseup = function(){
+					This.fnUp();
+					This.setting.toUp();
+				}
+				return false;
+			};
+
+		};
+
+		Drag.prototype.fnDown = function(ev){
+			this.disX = ev.clientX - this.obj.offsetLeft;
+			this.disY = ev.clientY - this.obj.offsetTop;
+		};
+		Drag.prototype.fnMove = function(ev){
+			this.obj.style.left = ev.clientX - this.disX + 'px';
+			this.obj.style.top = ev.clientY - this.disY + 'px'; 
+		};
+		Drag.prototype.fnUp = function(){
+			document.onmousemove = null;
+			document.onmouseup = null;
+		};
+
+		//拷贝继承属性
+		function extend(obj1, obj2){
+			for(var attr in obj2){
+				obj1[attr] = obj2[attr];
+			}
+		}	
+	</script>
+	<div id="div1"></div>
+	<div id="div2"></div>
+	<div id="div3"></div>
+</body>
+</html>
