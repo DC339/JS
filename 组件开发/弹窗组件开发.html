@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		input, div{ margin:0;padding: 0 }
+		input { width: 30px; }
+		.pop { background:white; border:1px #000 solid; position: absolute;left:0;top:0;z-index:2; }
+		.pop .title { height: 30px;line-height:30px;background-color: gray;color:#fff;position:relative; }
+		.title .close { position:absolute;right:5px;top:0; }
+		#mark { background-color: rgba(0,0,0,.3);position: absolute;left:0;top:0;z-index: 1; }
+	</style>
+</head>
+<body>
+	<script>
+		window.onload = function(){
+			var aBtns = document.getElementsByTagName("input");
+			aBtns[0].onclick = function(){
+				var d1 = new Dialog();
+				d1.init({
+					iNow : 0,
+					dir : 'center',
+					titile : '登录',
+				});
+			};
+			aBtns[1].onclick = function(){
+				var d1 = new Dialog();
+				d1.init({
+					iNow : 1,
+					w : 300,
+					h : 220,
+					dir : 'right',
+					titile : '公告',
+				});
+			};
+			aBtns[2].onclick = function(){
+				var d1 = new Dialog();
+				d1.init({
+					iNow : 2,
+					mark : true
+				});
+			};
+		}
+		function Dialog(){
+			this.oDiv = null;
+			this.settings = {
+				w : 400,
+				h : 300,
+				dir : 'center',
+				title : "标题",
+				mark : false
+			};
+		}
+
+		Dialog.prototype.json = {};
+
+		Dialog.prototype.init = function(opt){
+			extend(this.settings, opt);
+
+			console.log(this.json[opt.iNow]);
+
+			if(this.json[opt.iNow] == undefined){
+				this.json[opt.iNow] = true;
+			}
+
+			if(this.json[opt.iNow]){
+				this.create();
+				this.fnClose();
+
+				if(this.settings.mark){
+					this.createMark();
+				}
+
+			}
+
+			this.json[opt.iNow] = false;
+
+			
+		};
+
+		Dialog.prototype.create = function(){
+			this.oDiv = document.createElement("div");
+			this.oDiv.className = "pop";
+			this.oDiv.innerHTML = '<div class="title"><span>'+this.settings.title+'</span><span class="close">X</span></div><div class="content"></div>';
+			document.body.appendChild(this.oDiv);
+			this.setData();
+		};
+
+		Dialog.prototype.setData = function(){
+			this.oDiv.style.width = this.settings.w + 'px';
+			this.oDiv.style.height = this.settings.h + 'px';
+
+			if(this.settings.dir == "center"){
+				this.oDiv.style.left = (viewWidth() - this.oDiv.offsetWidth)/2 + 'px';
+				this.oDiv.style.top = (viewHeight() - this.oDiv.offsetHeight)/2 + 'px';
+			}
+			else if(this.settings.dir == "right"){
+				this.oDiv.style.left = viewWidth() - this.oDiv.offsetWidth + 'px';
+				this.oDiv.style.top = viewHeight() - this.oDiv.offsetHeight + 'px';
+			}
+		};
+
+		Dialog.prototype.createMark = function(){
+			var oMark = document.createElement('div');
+			oMark.id = "mark";
+			document.body.appendChild(oMark);
+			this.oMark = oMark;
+			oMark.style.width = viewWidth() + 'px';
+			oMark.style.height = viewHeight() + 'px';
+		}
+
+		Dialog.prototype.fnClose = function(){
+			var This = this;
+			this.oClose = this.oDiv.querySelector('.close');
+			this.oClose.onclick = function(){
+				document.body.removeChild(This.oDiv);
+				if(This.settings.mark){
+					document.body.removeChild(This.oMark);
+				}
+				This.json[This.settings.iNow] = true;
+			}
+		};
+
+		function extend(obj1,obj2){
+			for(var attr in obj2){
+				obj1[attr] = obj2[attr];
+			}
+		}
+		//获得可视区的宽高
+		function viewWidth(){
+			return document.documentElement.clientWidth;
+		}
+		function viewHeight(){
+			return document.documentElement.clientHeight;
+		}
+	</script>
+	<input type="button" value="1">
+	<input type="button" value="2">
+	<input type="button" value="3">
+	<!-- <div class="pop">
+		<div class="title"><span>标题</span><span class="close">X</span></div>
+		<div class="content"></div>
+	</div> -->
+	<!-- <div id="mark"></div> -->
+</body>
+</html>
