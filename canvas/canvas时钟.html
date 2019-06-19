@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		body { background-color: #000; }
+		#c1 { background-color: #fff; }
+		#c1 span { color: #fff }
+	</style>
+</head>
+<body>
+	<canvas id="c1" width="600" height="600">
+		<span>--浏览器不支持canvas--</span>
+	</canvas>
+	<script type="text/javascript">
+		var oC = document.getElementById("c1");
+		var cv = oC.getContext("2d");
+
+		function toDraw(){
+			var x = 300, y = 300, r = 150;
+
+			//画出秒钟格
+			cv.beginPath();
+
+			for(let i = 0; i < 60; i++){
+				cv.moveTo(x, y);
+				cv.arc(x, y, r, 6 * i * Math.PI / 180, 6 * (i+1) * Math.PI / 180, false)；
+			}
+
+			cv.closePath();
+			cv.stroke();
+
+			// 白色圆盘
+			cv.fillStyle = "white";
+			cv.beginPath();
+			cv.moveTo(x, y);
+			cv.arc(x, y, r , 0, 360 * Math.PI / 180, false );
+			cv.closePath();
+			cv.fill();
+
+			cv.stroke();
+		}
+
+		toDraw();
+		
+
+	</script>
+</body>
+</html>
