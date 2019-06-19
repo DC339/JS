@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		body { background-color: #000; }
+		#c1 { background-color: #fff; }
+		ul { float: left;color: #fff;font-size:30px; }
+	</style>
+</head>
+<body>
+	<script type="text/javascript">
+		window.onload = function(){
+			var oC = document.getElementById("c1");
+			var oGC = oC.getContext("2d");
+			var aLi = document.getElementsByTagName("li");
+			var timer = null;
+
+
+			clearInterval(timer);
+			for(let i = 0; i < aLi.length; i++){
+				aLi[i].onclick = function(){
+					// 获取文字内容并写入画布中
+					var str = this.innerHTML;
+					var h = 180;
+					clearInterval(timer);
+					var iNow = 0;
+
+					oGC.clearRect(0, 0, oC.width, oC.height);
+					// 设置字体的样式
+					oGC.font = h + 'px impact';
+					oGC.textBaseline = 'top';
+					oGC.fillStyle = 'red';
+					//获取文字的宽度
+					var w = oGC.measureText(str).width;
+
+					oGC.fillText(str, (oC.width - w)/2, (oC.height - h)/2);
+
+					//获取像素点
+					var oImg = oGC.getImageData((oC.width - w)/2, (oC.height - h)/2, w, h);
+					oGC.clearRect(0,0,oC.width,oC.height);
+
+					// 抽取1/10的像素值
+					var arr = randomArr(w*h, w*h/10);
+					console.log(arr);
+					//创建新的img
+					var newImg = oGC.createImageData(w, h);
+
+					timer = setInterval(function(){
+					console.log(1)
+
+						// 为newImg的像素点赋值
+						for(let i = 0; i < arr[iNow].length; i++){
+							newImg.data[4 * arr[iNow][i]] = oImg.data[4 * arr[iNow][i]];
+							newImg.data[4 * arr[iNow][i]+1] = oImg.data[4 * arr[iNow][i]+1];
+							newImg.data[4 * arr[iNow][i]+2] = oImg.data[4 * arr[iNow][i]+2];
+							newImg.data[4 * arr[iNow][i]+3] = oImg.data[4 * arr[iNow][i]+3];
+						}
+
+						//设置新的像素点
+						oGC.putImageData(newImg, (oC.width - w)/2, (oC.height - h)/2);
+
+						if(iNow == 9){
+							iNow = 0;
+							clearInterval(timer);
+						}else{
+							iNow++;
+						}
+					},200);
+					
+					
+
+					
+				}
+			}
+
+			function randomArr(iAll, iNow){
+				var arr = [];
+				var allArr = [];
+				for(let j = 0; j < iAll; j++){
+					arr.push(j);
+				}
+
+				for(let i = 0; i < iAll/iNow; i++){
+					var newArr = [];
+					for(let j = 0; j < iNow; j++){
+						newArr.push(arr.splice( Math.floor(Math.random()*arr.length), 1) );
+
+					}
+					allArr.push(newArr);
+				}
+				return allArr;
+			}
+
+		}
+	</script>
+	<canvas id="c1" width="400" height="400"></canvas>
+	<ul>
+		<li>大</li>
+		<li>到</li>
+		<li>暴</li>
+		<li>雨</li>
+	</ul>
+</body>
+</html>
