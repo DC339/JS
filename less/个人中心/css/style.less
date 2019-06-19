@@ -1,0 +1,195 @@
+@import 'global';
+
+.backImg(@x:0,@y:0){
+	background: url("../img/icon.png") no-repeat @x/@rem @y/@rem;
+	background-size: 60/@rem 800/@rem;  //雪碧图的宽高
+
+}
+
+.header {
+	height:88/@rem;
+	background: url("../img/bg.png") no-repeat;
+	background-size: 100%;   //确保背景图片铺满
+
+	.backBtn {
+		width: 66/@rem;
+		height: 88/@rem;
+		padding:14/@rem 8/@rem;
+		position: absolute;
+		left:0;
+		top: 0;
+		i{
+			width: 60/@rem;
+			height: 60/@rem;
+			display:inline-block;
+			.backImg();
+		}
+	}
+
+	.logo{
+		height: 88/@rem;
+		text-align:center;
+		img{
+			height:100%;
+		}
+	}
+
+	.signOut{
+		height:60/@rem;
+		position:absolute;
+		right:0;
+		top:0;
+		color:#fff;
+		padding:14/@rem 7/@rem;
+		line-height:60/@rem;
+
+		i{
+			width:60/@rem;
+			height:60/@rem;
+			display: inline-block;
+			.backImg(0, -60);
+		}
+	}
+}
+
+.info{
+	height:375/@rem;
+	background:url("../img/ingoBg.png") no-repeat;
+	background-size: 100%;
+	padding-top:63/@rem;
+	text-align:center;
+
+	.headerImg{
+		width:180/@rem;
+		height:180/@rem;
+		border:3/@rem solid #fff;
+		border-radius:50%;
+		overflow:hidden;
+		margin: 0 auto 34/@rem;
+		img{
+			width:100%;
+			height:100%;
+		}
+	}
+
+	.userName{
+		height:58/@rem;
+		span{
+			display:inline-block;
+			line-height:58/@rem;
+			vertical-align: middle;
+			font-size:36/@rem;
+			color:#fff;
+		}
+		img{
+			width:107/@rem;
+			height:36/@rem;
+			display: inline-block;
+			vertical-align: middle;
+		}
+	}
+
+	.regTime{
+		height:48/@rem;
+		line-height:48/@rem;
+		font-size:22/@rem;
+		color:rgba(255,255,255,.6);
+	}
+}
+
+.title{
+	height:100/@rem;
+	line-height:100/@rem;
+	background-color: #fbfcff;
+	font-size:32/@rem;
+	padding-left:50/@rem;
+	color:#9ca9b4;
+	font-weight:normal;
+}
+
+.menu{
+	height:374/@rem;
+	padding:2/@rem 0;
+	background-color: #e5ebf0;
+	display:grid;
+	grid-template-rows: repeat(2, 186/@rem);
+	grid-template-columns: repeat(4, 1fr);
+	grid-gap: 2/@rem;
+
+	.item{
+		background-color:#fff;
+		text-align:center;
+
+		i{
+			width:60/@rem;
+			height:60/@rem;
+			display:inline-block;
+			margin-top:40/@rem;
+			&.baseInfo{
+				.backImg(0, -120);
+			}
+			&.userInfo{
+				.backImg(0, -180);
+			}
+			&.vipInfo{
+				.backImg(0, -240);
+			}
+			&.order{
+				.backImg(0, -300);
+			}
+			&.record{
+				.backImg(0, -360);
+			}
+			&.device{
+				.backImg(0, -420);
+			}
+			&.account{
+				.backImg(0, -480);
+			}
+			&.more{
+				.backImg(0, -540);
+			}
+		}
+		span{
+			display:inline-block;
+			line-height:57/@rem;
+			width:100%;
+		}
+	}
+}
+
+.safe{
+	height:186/@rem;
+	padding:2/@rem 0;
+	display:flex;
+	background-color: #e5ebf0;
+	text-align:center;
+
+	.item{
+		height:186/@rem;
+		flex:1;
+		background-color: #fff;
+	
+
+		&:first-child{
+			margin-right:2/@rem;
+		}
+		i{
+			width:60/@rem;
+			height:60/@rem;
+			display:inline-block;
+			margin-top:40/@rem;
+			&.password{
+				.backImg(0,-600);
+			}
+			&.email{
+				.backImg(0, -660);
+			}
+		}
+		span{
+			display:inline-block;
+			line-height: 57/@rem;
+			width:100%;
+		}
+	}
+}

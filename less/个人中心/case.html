@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>个人中心</title>
+	<script type="text/javascript">
+		var pixRatio = 1/window.devicePixelRatio;
+		var  html = document.documentElement;
+		document.write('<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale='+pixRatio+',minimum-scale='+pixRatio+',maximum-scale='+pixRatio+'">');
+		html.style.fontSize = html.clientWidth / 25 + 'px';
+	</script>
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+	<header class="header">
+		<div class="backBtn"><i>&nbsp;</i></div>
+		<h1 class="logo"><img src="img/logo.png"></h1>
+		<div class="signOut"><span>退出</span><i>&nbsp;</i></div>
+	</header>
+	<section class="info">
+		<div class="headerImg"><img src="img/16.jpg"></div>
+		<p class="userName"><span>我是DC339</span><img src="img/member.png"></p>
+		<p class="regTime">注册时间：2016-01-27</p>
+	</section>
+	<h3 class="title">个人资料</h3>
+	<section class="menu">
+		<a href="#" class="item"><i class="baseInfo">&nbsp;</i><span>基本信息</span></a>
+		<a href="#" class="item"><i class="userInfo">&nbsp;</i><span>个人信息</span></a>
+		<a href="#" class="item"><i class="vipInfo">&nbsp;</i><span>VIP信息</span></a>
+		<a href="#" class="item"><i class="order">&nbsp;</i><span>我的订单</span></a>
+		<a href="#" class="item"><i class="record">&nbsp;</i><span>视频激活记录</span></a>
+		<a href="#" class="item"><i class="device">&nbsp;</i><span>视频激活设备</span></a>
+		<a href="#" class="item"><i class="account">&nbsp;</i><span>绑定账号</span></a>
+		<a href="#" class="item"><i class="more">&nbsp;</i><span></span></a>
+	</section>
+	<h3 class="title">个人资料</h3>
+	<section class="safe">
+		<a href="#" class="item"><i class="password">&nbsp;</i><span>修改密码</span></a>
+		<a href="#" class="item"><i class="email">&nbsp;</i><span>修改绑定邮箱</span></a>
+	</section>
+</body>
+</html>
